@@ -2988,7 +2988,7 @@ hr {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #6fffd4;
+  background: #e5f4fb;
   display: inline-block;
   margin-right: 3px;
   transform: translateY(-2px);
@@ -3083,5 +3083,8 @@ hr {
   transition: all 0.2s ease-in-out 0s;
 }
 #taboola-livere {
+  display: none;
+}
+.trc_related_container {
   display: none;
 }
