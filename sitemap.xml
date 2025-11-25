@@ -2,13 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://lirifa.github.io/js%E6%89%8B%E5%86%99%E7%B3%BB%E5%88%97%E2%80%94%E2%80%94%E8%8A%82%E6%B5%81%E5%87%BD%E6%95%B0%E3%80%81%E9%98%B2%E6%8A%96%E5%87%BD%E6%95%B0.html</loc>
-    
-    <lastmod>2025-11-25</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://lirifa.github.io/categories/index.html</loc>
     
     <lastmod>2025-11-20</lastmod>
@@ -23,7 +16,7 @@
   </url>
   
   <url>
-    <loc>https://lirifa.github.io/js%E4%B8%AD%E7%9A%84%E9%97%AD%E5%8C%85.html</loc>
+    <loc>https://lirifa.github.io/H5-video%E5%BC%80%E5%8F%91%E9%97%AE%E9%A2%98%E5%8F%8A%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9.html</loc>
     
     <lastmod>2025-11-11</lastmod>
     
@@ -37,9 +30,16 @@
   </url>
   
   <url>
-    <loc>https://lirifa.github.io/H5-video%E5%BC%80%E5%8F%91%E9%97%AE%E9%A2%98%E5%8F%8A%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9.html</loc>
+    <loc>https://lirifa.github.io/js%E6%89%8B%E5%86%99%E7%B3%BB%E5%88%97%E2%80%94%E2%80%94%E8%8A%82%E6%B5%81%E5%87%BD%E6%95%B0%E3%80%81%E9%98%B2%E6%8A%96%E5%87%BD%E6%95%B0.html</loc>
     
-    <lastmod>2025-11-11</lastmod>
+    <lastmod>2021-02-22</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://lirifa.github.io/js%E4%B8%AD%E7%9A%84%E9%97%AD%E5%8C%85.html</loc>
+    
+    <lastmod>2021-02-06</lastmod>
     
   </url>
   
@@ -116,14 +116,14 @@
   </url>
   
   <url>
-    <loc>https://lirifa.github.io/tags/%E5%85%B6%E4%BB%96/</loc>
+    <loc>https://lirifa.github.io/tags/js/</loc>
     <lastmod>2025-11-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://lirifa.github.io/tags/js/</loc>
+    <loc>https://lirifa.github.io/tags/%E5%85%B6%E4%BB%96/</loc>
     <lastmod>2025-11-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
