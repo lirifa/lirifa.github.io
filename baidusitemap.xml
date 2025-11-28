@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://lirifa.github.io/js%E4%B8%AD%E7%9A%84%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF-Event-Loop.html</loc>
+    <lastmod>2025-11-28</lastmod>
+  </url>
+  <url>
     <loc>https://lirifa.github.io/hello-world.html</loc>
     <lastmod>2025-11-11</lastmod>
   </url>
