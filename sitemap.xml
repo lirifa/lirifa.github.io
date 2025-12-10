@@ -116,13 +116,6 @@
 
   
   <url>
-    <loc>https://lirifa.github.io/tags/hexo/</loc>
-    <lastmod>2025-12-10</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://lirifa.github.io/tags/%E7%BD%91%E7%BB%9C/</loc>
     <lastmod>2025-12-10</lastmod>
     <changefreq>daily</changefreq>
@@ -130,7 +123,7 @@
   </url>
   
   <url>
-    <loc>https://lirifa.github.io/tags/%E5%89%8D%E7%AB%AF/</loc>
+    <loc>https://lirifa.github.io/tags/hexo/</loc>
     <lastmod>2025-12-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -138,6 +131,13 @@
   
   <url>
     <loc>https://lirifa.github.io/tags/websocket/</loc>
+    <lastmod>2025-12-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://lirifa.github.io/tags/%E5%89%8D%E7%AB%AF/</loc>
     <lastmod>2025-12-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
