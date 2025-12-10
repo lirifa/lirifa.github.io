@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 5.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/16x16.png">
+  <link rel="mask-icon" href="/img/logo.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.3.0/css/all.min.css" integrity="sha256-/4UQcSmErDzPCMAiuOiWPVVsNN2s3ZY/NsmXNcj0IFc=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lirifa.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.15.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":true,"color":"#2bb5d4","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="结论：this的值取决于函数是怎么被调用的。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js中的this指向问题">
+<meta property="og:url" content="https://lirifa.github.io/js%E4%B8%AD%E7%9A%84this%E6%8C%87%E5%90%91%E9%97%AE%E9%A2%98.html">
+<meta property="og:site_name" content="Rafa&#39;s Blog">
+<meta property="og:description" content="结论：this的值取决于函数是怎么被调用的。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-05-03T03:34:34.000Z">
+<meta property="article:modified_time" content="2021-05-03T08:23:33.000Z">
+<meta property="article:author" content="Rafa">
+<meta property="article:tag" content="前端">
+<meta property="article:tag" content="js">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://lirifa.github.io/js%E4%B8%AD%E7%9A%84this%E6%8C%87%E5%90%91%E9%97%AE%E9%A2%98.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://lirifa.github.io/js%E4%B8%AD%E7%9A%84this%E6%8C%87%E5%90%91%E9%97%AE%E9%A2%98.html","path":"js中的this指向问题.html","title":"js中的this指向问题"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>js中的this指向问题 | Rafa's Blog</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?e65b95711a0ae7fa2a5d53e3186cff24"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Rafa's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">角落</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-留言"><a href="/guestbook/" rel="section"><i class="fa fa-book fa-fw"></i>留言</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86-%E2%80%94%E2%80%94-JS-%E7%9A%84%E6%89%A7%E8%A1%8C%E6%A8%A1%E5%9E%8B%E4%B8%8E%E4%BD%9C%E7%94%A8%E5%9F%9F%E6%9C%BA%E5%88%B6"><span class="nav-text">背景知识 —— JS 的执行模型与作用域机制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#this-%E7%9A%84%E7%BB%91%E5%AE%9A%E8%A7%84%E5%88%99"><span class="nav-text">this 的绑定规则</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%BB%98%E8%AE%A4%E7%BB%91%E5%AE%9A%EF%BC%9A%E6%99%AE%E9%80%9A%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8-%E2%86%92-this-%E5%85%A8%E5%B1%80%E5%AF%B9%E8%B1%A1"><span class="nav-text">默认绑定：普通函数调用 → this &#x3D; 全局对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9A%90%E5%BC%8F%E7%BB%91%E5%AE%9A%EF%BC%9A%E4%BD%9C%E4%B8%BA%E5%AF%B9%E8%B1%A1%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8-%E2%86%92-this-%E5%AF%B9%E8%B1%A1%E6%9C%AC%E8%BA%AB"><span class="nav-text">隐式绑定：作为对象方法调用 → this &#x3D; 对象本身</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%98%BE%E5%BC%8F%E7%BB%91%E5%AE%9A%EF%BC%9A%E7%94%A8-call-apply-bind-%E5%BC%BA%E5%88%B6%E6%8C%87%E5%AE%9A-this"><span class="nav-text">显式绑定：用 call &#x2F; apply &#x2F; bind 强制指定 this</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#new-%E7%BB%91%E5%AE%9A%EF%BC%9A%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8-%E2%86%92-this-%E6%96%B0%E5%88%9B%E5%BB%BA%E7%9A%84%E5%AE%9E%E4%BE%8B"><span class="nav-text">new 绑定：构造函数调用 → this &#x3D; 新创建的实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0%EF%BC%9Athis-%E8%A7%A6%E5%8F%91%E4%BA%8B%E4%BB%B6%E7%9A%84-DOM-%E5%85%83%E7%B4%A0"><span class="nav-text">事件处理函数：this &#x3D; 触发事件的 DOM 元素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0%E4%B8%AD%E7%9A%84this"><span class="nav-text">箭头函数中的this</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%91%E5%AE%9A%E4%BC%98%E5%85%88%E7%BA%A7%E6%80%BB%E7%BB%93%EF%BC%9A"><span class="nav-text">绑定优先级总结：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88-this-%E8%AE%BE%E8%AE%A1%E5%BE%97%E8%BF%99%E4%B9%88%E2%80%9C%E5%A5%87%E6%80%AA%E2%80%9D%EF%BC%9F"><span class="nav-text">为什么 this 设计得这么“奇怪”？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%88%E6%9E%81%E6%80%BB%E7%BB%93%EF%BC%9A%E4%B8%80%E5%BC%A0%E8%A1%A8%E6%90%9E%E5%AE%9A-this"><span class="nav-text">终极总结：一张表搞定 this</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Rafa"
+      src="https://avatars.githubusercontent.com/u/44889418?v=4">
+  <p class="site-author-name" itemprop="name">Rafa</p>
+  <div class="site-description" itemprop="description">角落</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/lirifa" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;lirifa" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:rafa_im@163.com" title="E-Mail → mailto:rafa_im@163.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://lirifa.github.io/js%E4%B8%AD%E7%9A%84this%E6%8C%87%E5%90%91%E9%97%AE%E9%A2%98.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/44889418?v=4">
+      <meta itemprop="name" content="Rafa">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rafa's Blog">
+      <meta itemprop="description" content="角落">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="js中的this指向问题 | Rafa's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          js中的this指向问题
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-05-03 11:34:34 / 修改时间：16:23:33" itemprop="dateCreated datePublished" datetime="2021-05-03T11:34:34+08:00">2021-05-03</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>结论：<font color="#dd0000">this的值取决于函数是怎么被调用的。</font></p>
+<a id="more"></a>
+
+<h1 id="背景知识-——-JS-的执行模型与作用域机制"><a href="#背景知识-——-JS-的执行模型与作用域机制" class="headerlink" title="背景知识 —— JS 的执行模型与作用域机制"></a>背景知识 —— JS 的执行模型与作用域机制</h1><p><strong>代码执行的三个阶段</strong><br>编译阶段 -&gt; 创建执行上下文 -&gt; 执行阶段</p>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>主要作用</th>
+<th>与 this 的关系</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>编译阶段</td>
+<td>词法分析、作用域收集、变量/函数提升</td>
+<td>this 不参与</td>
+</tr>
+<tr>
+<td>创建执行上下文</td>
+<td>构建变量环境和词法环境</td>
+<td>this 未绑定</td>
+</tr>
+<tr>
+<td>执行阶段</td>
+<td>逐行执行语句、函数调用、表达式求值</td>
+<td>this 根据调用方式动态绑定</td>
+</tr>
+</tbody></table>
+<p>this 和变量查找是两码事！</p>
+<ul>
+<li>自由变量查找：沿着作用域链向上查找（编译时确定）</li>
+<li>this 查找：取决于函数如何被调用（运行时决定）<table>
+<thead>
+<tr>
+<th>机制</th>
+<th>查找什么？</th>
+<th>何时确定？</th>
+<th>由什么决定？</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>自由变量（如 myName）</td>
+<td>变量的值</td>
+<td>编译阶段（代码解析时）</td>
+<td>函数定义的位置（词法作用域）</td>
+</tr>
+<tr>
+<td>this</td>
+<td>上下文对象</td>
+<td>运行阶段（函数调用时）</td>
+<td>函数的调用方式</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<h1 id="this-的绑定规则"><a href="#this-的绑定规则" class="headerlink" title="this 的绑定规则"></a>this 的绑定规则</h1><p>记住这个口诀 👇</p>
+<blockquote>
+<p>“看调用，不看定义；谁调用，this 就是谁！”</p>
+</blockquote>
+<h2 id="默认绑定：普通函数调用-→-this-全局对象"><a href="#默认绑定：普通函数调用-→-this-全局对象" class="headerlink" title="默认绑定：普通函数调用 → this = 全局对象"></a>默认绑定：普通函数调用 → this = 全局对象</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">this</span>);</span><br><span class="line">&#125;</span><br><span class="line">foo(); <span class="comment">// 浏览器中 → window（非严格模式）；严格模式 → undefined</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>问题：容易意外污染全局（尤其用 var 时，变量会挂到 window 上）</li>
+<li>建议：始终使用 ‘use strict’，让错误提前暴露！使用 let 声明 变量不会挂到window 上</li>
+</ul>
+<h2 id="隐式绑定：作为对象方法调用-→-this-对象本身"><a href="#隐式绑定：作为对象方法调用-→-this-对象本身" class="headerlink" title="隐式绑定：作为对象方法调用 → this = 对象本身"></a>隐式绑定：作为对象方法调用 → this = 对象本身</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> user = &#123;</span><br><span class="line">  name: <span class="string">&#x27;rafa&#x27;</span>,</span><br><span class="line">  <span class="function"><span class="title">greet</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`Hello, <span class="subst">$&#123;<span class="built_in">this</span>.name&#125;</span>`</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line">user.greet(); <span class="comment">// → &quot;Hello, rafa&quot;</span></span><br><span class="line"><span class="comment">// 其实普通函数调用跟对象方法调用是一回事</span></span><br><span class="line"><span class="comment">// 全局函数声明后会挂在 window 下面，成为window的一个方法</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">rafa</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;my name is rafa&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">window</span>.rafa() <span class="comment">// &quot;my name is rafa&quot;</span></span><br><span class="line">rafa() <span class="comment">// &quot;my name is rafa&quot;</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">window</span>.rafa === rafa)  <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>规则：点（.）前面是谁，this 就是谁</li>
+<li>警惕“方法丢失”：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> sayHi = user.greet;</span><br><span class="line">sayHi(); <span class="comment">// this = window → &quot;Hello, undefined&quot;</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="显式绑定：用-call-apply-bind-强制指定-this"><a href="#显式绑定：用-call-apply-bind-强制指定-this" class="headerlink" title="显式绑定：用 call / apply / bind 强制指定 this"></a>显式绑定：用 call / apply / bind 强制指定 this</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> bar = &#123; <span class="attr">myName</span>: <span class="string">&#x27;rafa&#x27;</span> &#125;;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">updateName</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">this</span>.myName = <span class="string">&#x27;hexo&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line">updateName.call(bar); <span class="comment">// 强制 this = bar</span></span><br><span class="line"><span class="built_in">console</span>.log(bar.myName); <span class="comment">// → &#x27;hexo&#x27;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>这是修复“方法丢失”的终极武器！</li>
+<li>bind 还能创建永久绑定的新函数。</li>
+</ul>
+<h2 id="new-绑定：构造函数调用-→-this-新创建的实例"><a href="#new-绑定：构造函数调用-→-this-新创建的实例" class="headerlink" title="new 绑定：构造函数调用 → this = 新创建的实例"></a>new 绑定：构造函数调用 → this = 新创建的实例</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">this</span>.name = name; <span class="comment">// this 指向即将返回的新对象</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> p = <span class="keyword">new</span> Person(<span class="string">&#x27;小明&#x27;</span>);</span><br><span class="line"><span class="built_in">console</span>.log(p.name); <span class="comment">// → &#x27;小明&#x27;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用 new 时，JS 会自动：<ol>
+<li>创建空对象</li>
+<li>绑定 this 到该对象</li>
+<li>执行函数体</li>
+<li>返回对象</li>
+</ol>
+</li>
+</ul>
+<h2 id="事件处理函数：this-触发事件的-DOM-元素"><a href="#事件处理函数：this-触发事件的-DOM-元素" class="headerlink" title="事件处理函数：this = 触发事件的 DOM 元素"></a>事件处理函数：this = 触发事件的 DOM 元素</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;button id=<span class="string">&quot;btn&quot;</span>&gt;点我&lt;/button&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">&#x27;btn&#x27;</span>).addEventListener(<span class="string">&#x27;click&#x27;</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">this</span>); <span class="comment">// → &lt;button id=&quot;btn&quot;&gt; 元素</span></span><br><span class="line">&#125;);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>浏览器自动将 this 绑定到事件目标元素，非常方便！</li>
+</ul>
+<h2 id="箭头函数中的this"><a href="#箭头函数中的this" class="headerlink" title="箭头函数中的this"></a>箭头函数中的this</h2><p>箭头函数不绑定 this，而是继承外层词法作用域的 this</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = &#123;</span><br><span class="line">  name: <span class="string">&#x27;Bob&#x27;</span>,</span><br><span class="line">  <span class="function"><span class="title">foo</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="built_in">this</span>.name); <span class="comment">// &quot;Bob&quot;</span></span><br><span class="line">    &#125;, <span class="number">100</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="绑定优先级总结："><a href="#绑定优先级总结：" class="headerlink" title="绑定优先级总结："></a>绑定优先级总结：</h2><p><strong>new &gt; call/apply/bind &gt; 对象方法 &gt; 普通函数</strong></p>
+<h2 id="为什么-this-设计得这么“奇怪”？"><a href="#为什么-this-设计得这么“奇怪”？" class="headerlink" title="为什么 this 设计得这么“奇怪”？"></a>为什么 this 设计得这么“奇怪”？</h2><p>JavaScript 的 this 常被吐槽，原因有三：</p>
+<ol>
+<li>历史包袱：早期没有类，靠函数模拟 OOP，this 成了“万能胶水”</li>
+<li>默认指向 window：导致全局污染（var a = 1 → window.a = 1）</li>
+<li>动态绑定 vs 静态作用域：与 JS 其他部分的设计哲学冲突</li>
+</ol>
+<p>当然，这种设计也有优点：</p>
+<ol>
+<li>方法可以被多个对象复用（通用工具函数）</li>
+<li>支持强大的“方法借用”（如 Array.prototype.slice.call(arguments)）</li>
+</ol>
+<blockquote>
+<p>🌈 ES6 的箭头函数正是为解决 this 困惑而生：<br>箭头函数没有自己的 this，它继承外层作用域的 this。</p>
+</blockquote>
+<h2 id="终极总结：一张表搞定-this"><a href="#终极总结：一张表搞定-this" class="headerlink" title="终极总结：一张表搞定 this"></a>终极总结：一张表搞定 this</h2><table>
+<thead>
+<tr>
+<th>调用方式</th>
+<th>this 指向</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>普通调用 fn()</td>
+<td>全局对象（严格模式：undefined）</td>
+<td>foo()</td>
+</tr>
+<tr>
+<td>对象方法 obj.fn()</td>
+<td>obj</td>
+<td>user.getName()</td>
+</tr>
+<tr>
+<td>显式绑定 fn.call(obj)</td>
+<td>obj</td>
+<td>greet.call(person)</td>
+</tr>
+<tr>
+<td>构造函数 new Fn()</td>
+<td>新创建的实例</td>
+<td>new Date()</td>
+</tr>
+<tr>
+<td>事件回调</td>
+<td>触发事件的 DOM 元素</td>
+<td>button.onclick = fn</td>
+</tr>
+<tr>
+<td><strong>牢记三句话：</strong></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<ol>
+<li>变量查找看“出生地”，this 查看“谁叫你”</li>
+<li>let/const 不挂 window，var 会挂window —— 少用 var！</li>
+<li>开启 ‘use strict’，让错误无处藏身</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag"><i class="fa fa-tag"></i> 前端</a>
+              <a href="/tags/js/" rel="tag"><i class="fa fa-tag"></i> js</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/js%E4%B8%AD%E7%9A%84%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF-Event-Loop.html" rel="prev" title="js中的事件循环(Event Loop)">
+                  <i class="fa fa-chevron-left"></i> js中的事件循环(Event Loop)
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC82MDk1Ni8zNzQyNg=="></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Rafa</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">46k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">42 分钟</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="100" alpha="0.3" zIndex="-1" src="https://unpkg.com/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/jquery@3.6.3/dist/jquery.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  <script src="https://unpkg.com/hexo-generator-searchdb@1.4.1/dist/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+  
+
+
+
+
+<script src="/js/third-party/comments/livere.js"></script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"left","width":160,"height":280},"mobile":{"show":false},"react":{"opacityDefault":1,"opacityOnHover":1},"log":false,"tagMode":false});</script></body>
+</html>
