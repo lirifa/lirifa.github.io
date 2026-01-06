@@ -27,17 +27,17 @@
 <meta property="og:site_name" content="Rafa&#39;s Blog">
 <meta property="og:description" content="事件循环是JavaScript处理异步操作的机制，是浏览器渲染主线程的工作方式。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://s41.ax1x.com/2025/11/28/pZEfpuD.png">
-<meta property="og:image" content="https://s41.ax1x.com/2025/11/28/pZE4EX8.png">
-<meta property="og:image" content="https://s41.ax1x.com/2025/11/29/pZE7MQI.png">
-<meta property="og:image" content="https://s41.ax1x.com/2025/11/29/pZE7lOP.png">
+<meta property="og:image" content="https://s41.ax1x.com/2026/01/07/pZdhjk6.png">
+<meta property="og:image" content="https://s41.ax1x.com/2026/01/07/pZdhawt.png">
+<meta property="og:image" content="https://s41.ax1x.com/2026/01/07/pZd496H.png">
+<meta property="og:image" content="https://s41.ax1x.com/2026/01/07/pZd4inA.png">
 <meta property="article:published_time" content="2021-04-17T07:01:38.000Z">
-<meta property="article:modified_time" content="2025-11-28T18:09:19.972Z">
+<meta property="article:modified_time" content="2026-01-06T17:07:39.087Z">
 <meta property="article:author" content="Rafa">
 <meta property="article:tag" content="前端">
 <meta property="article:tag" content="js">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://s41.ax1x.com/2025/11/28/pZEfpuD.png">
+<meta name="twitter:image" content="https://s41.ax1x.com/2026/01/07/pZdhjk6.png">
 
 
 <link rel="canonical" href="https://lirifa.github.io/js%E4%B8%AD%E7%9A%84%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF-Event-Loop.html">
@@ -246,7 +246,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-11-29 02:09:19" itemprop="dateModified" datetime="2025-11-29T02:09:19+08:00">2025-11-29</time>
+      <time title="修改时间：2026-01-07 01:07:39" itemprop="dateModified" datetime="2026-01-07T01:07:39+08:00">2026-01-07</time>
     </span>
 
   
@@ -277,7 +277,7 @@
         <p>事件循环是JavaScript处理异步操作的机制，是浏览器渲染主线程的工作方式。</p>
 <a id="more"></a>
 
-<h1 id="一、在了解js的事件循环之前，我们先了解一下浏览器有哪些进程线程："><a href="#一、在了解js的事件循环之前，我们先了解一下浏览器有哪些进程线程：" class="headerlink" title="一、在了解js的事件循环之前，我们先了解一下浏览器有哪些进程线程："></a>一、在了解js的事件循环之前，我们先了解一下浏览器有哪些进程线程：</h1><p>首先要明确一点：<strong>浏览器是一个多进程多线程的应用程序</strong>。 浏览器内部工作极其复杂。为了避免相互影响，为了减少连环崩溃的几率，当启动浏览器后，它会自动启动多个进程，每个进程又包含有多个线程。<br><a target="_blank" rel="noopener" href="https://imgchr.com/i/pZEfpuD"><img src="https://s41.ax1x.com/2025/11/28/pZEfpuD.png" alt="pZEfpuD.png"></a> </p>
+<h1 id="一、在了解js的事件循环之前，我们先了解一下浏览器有哪些进程线程："><a href="#一、在了解js的事件循环之前，我们先了解一下浏览器有哪些进程线程：" class="headerlink" title="一、在了解js的事件循环之前，我们先了解一下浏览器有哪些进程线程："></a>一、在了解js的事件循环之前，我们先了解一下浏览器有哪些进程线程：</h1><p>首先要明确一点：<strong>浏览器是一个多进程多线程的应用程序</strong>。 浏览器内部工作极其复杂。为了避免相互影响，为了减少连环崩溃的几率，当启动浏览器后，它会自动启动多个进程，每个进程又包含有多个线程。<br><a target="_blank" rel="noopener" href="https://imgchr.com/i/pZdhjk6"><img src="https://s41.ax1x.com/2026/01/07/pZdhjk6.png" alt="pZdhjk6.png"></a></p>
 <blockquote>
 <p>可以在浏览器的任务管理器中查看当前的所有进程 其中，最主要的进程有：</p>
 </blockquote>
@@ -293,7 +293,7 @@
 </ul>
 </li>
 </ul>
-<ol start="2">
+<ol>
 <li>网络进程</li>
 </ol>
 <ul>
@@ -304,7 +304,7 @@
 </ul>
 </li>
 </ul>
-<ol start="3">
+<ol>
 <li>渲染进程（核心）</li>
 </ol>
 <ul>
@@ -344,7 +344,7 @@
 <li>我正在执行一个 JS 函数，执行到一半的时候用户点击了按钮，我该立即去执行点击事件的处理函数吗？</li>
 <li>我正在执行一个 JS 函数，执行到一半的时候某个计时器到达了时间，我该立即去执行它的回调吗？</li>
 <li>浏览器进程通知我“用户点击了按钮”，与此同时，某个计时器也到达了时间，我应该处理哪一个呢？</li>
-<li>……<br>渲染主线程想出了一个绝妙的主意来处理这个问题：排队。<br><a target="_blank" rel="noopener" href="https://imgchr.com/i/pZE4EX8"><img src="https://s41.ax1x.com/2025/11/28/pZE4EX8.png" alt="pZE4EX8.png"></a></li>
+<li>……<br>渲染主线程想出了一个绝妙的主意来处理这个问题：排队。<br><a target="_blank" rel="noopener" href="https://imgchr.com/i/pZdhawt"><img src="https://s41.ax1x.com/2026/01/07/pZdhawt.png" alt="pZdhawt.png"></a></li>
 </ul>
 <ol>
 <li>在最开始的时候，渲染主线程会进入一个无限循环</li>
@@ -358,7 +358,7 @@
 <li>网络通信完成后需要执行的任务 – <font color="#dd0000">XHR</font>、<font color="#dd0000">Fetch</font></li>
 <li>用户操作后需要执行的任务 – <font color="#dd0000">addEventListener</font></li>
 </ul>
-<p>如果让渲染主线程等待这些任务的时机达到，就会导致主线程长期处于「阻塞」的状态，从而导致浏览器「卡死」<br><a target="_blank" rel="noopener" href="https://imgchr.com/i/pZE7MQI"><img src="https://s41.ax1x.com/2025/11/29/pZE7MQI.png" alt="pZE7MQI.png"></a><br><strong>渲染主线程承担着极其重要的工作，无论如何都不能阻塞！</strong> 因此，浏览器选择<strong>异步</strong>来解决这个问题<br><a target="_blank" rel="noopener" href="https://imgchr.com/i/pZE7lOP"><img src="https://s41.ax1x.com/2025/11/29/pZE7lOP.png" alt="pZE7lOP.png"></a><br>使用异步的方式，<strong>渲染主线程永不阻塞</strong></p>
+<p>如果让渲染主线程等待这些任务的时机达到，就会导致主线程长期处于「阻塞」的状态，从而导致浏览器「卡死」<br><a target="_blank" rel="noopener" href="https://imgchr.com/i/pZd496H"><img src="https://s41.ax1x.com/2026/01/07/pZd496H.png" alt="pZd496H.png"></a><br><strong>渲染主线程承担着极其重要的工作，无论如何都不能阻塞！</strong> 因此，浏览器选择<strong>异步</strong>来解决这个问题<br><a target="_blank" rel="noopener" href="https://imgchr.com/i/pZd4inA"><img src="https://s41.ax1x.com/2026/01/07/pZd4inA.png" alt="pZd4inA.png"></a><br>使用异步的方式，<strong>渲染主线程永不阻塞</strong></p>
 <h1 id="四、任务有优先级吗"><a href="#四、任务有优先级吗" class="headerlink" title="四、任务有优先级吗"></a>四、任务有优先级吗</h1><p>我们都知道事件循环的过程中包含宏任务和微任务的说法，经常讲，事件循环往往从宏任务开始，但是在执行下一个宏任务前，我们需要先将本轮宏任务产生的微任务执行完毕。 那么任务有优先级吗？答案是<strong>没有</strong>。 <strong>但是任务队列有</strong>。 根据 W3C 的最新解释:</p>
 <blockquote>
 <p>每个任务都有一个任务类型，同一个类型的任务必须在一个队列，不同类型的任务可以分属于不同的队列。 在一次事件循环中，浏览器可以根据实际情况从不同的队列中取出任务执行。<br>浏览器必须准备好一个微队列，微队列中的任务优先所有其他任务执行 <a target="_blank" rel="noopener" href="https://html.spec.whatwg.org/multipage/webappapis.html#perform-a-microtask-checkpoint">https://html.spec.whatwg.org/multipage/webappapis.html#perform-a-microtask-checkpoint</a></p>
@@ -434,7 +434,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2025</span>
+  <span itemprop="copyrightYear">2026</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
