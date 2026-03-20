@@ -18,15 +18,15 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"lirifa.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#2bb5d4","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}}};
+    var CONFIG = {"hostname":"lirifa.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#2bb5d4","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="欢迎来到 Hexo! 这是你的第一篇文章。查看 文档了解更多信息。 如果您在使用Hexo时遇到任何问题，您可以在 疑难解答 中找到答案，也可以在 GitHub上问我。">
+  <meta name="description" content="Welcome to my blog, enter password to read.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hexo 基本使用方法">
 <meta property="og:url" content="https://lirifa.github.io/posts/3427432522/index.html">
 <meta property="og:site_name" content="Rafa&#39;s Blog">
-<meta property="og:description" content="欢迎来到 Hexo! 这是你的第一篇文章。查看 文档了解更多信息。 如果您在使用Hexo时遇到任何问题，您可以在 疑难解答 中找到答案，也可以在 GitHub上问我。">
+<meta property="og:description" content="Welcome to my blog, enter password to read.">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-12-31T16:00:00.000Z">
 <meta property="article:modified_time" content="2019-12-31T16:00:00.000Z">
@@ -249,21 +249,18 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>欢迎来到 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! 这是你的第一篇文章。查看 <a target="_blank" rel="noopener" href="https://hexo.io/docs/">文档</a>了解更多信息。 如果您在使用Hexo时遇到任何问题，您可以在 <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">疑难解答</a> 中找到答案，也可以在 <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>上问我。</p>
-<span id="more"></span> 
-<h2 id="快速开始"><a href="#快速开始" class="headerlink" title="快速开始"></a>快速开始</h2><h3 id="创建一篇文章"><a href="#创建一篇文章" class="headerlink" title="创建一篇文章"></a>创建一篇文章</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span>  <span class="comment"># 生成文章，会在source/_posts目录下生成一个abc.md文件</span></span><br></pre></td></tr></table></figure>
-
-<p>更多信息: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="启动本地服务"><a href="#启动本地服务" class="headerlink" title="启动本地服务"></a>启动本地服务</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>更多信息: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="生成静态文件"><a href="#生成静态文件" class="headerlink" title="生成静态文件"></a>生成静态文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>更多信息: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="部署博客"><a href="#部署博客" class="headerlink" title="部署博客"></a>部署博客</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>更多信息: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
+        <div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <script id="hbeData" type="hbeData" data-hmacdigest="21a25b79f0582dd7da6c32ac3537ad378a6a6bc503d649e5b0131808cc3eff22">f4cc23558ba95030556638b09840cfb72224435b3e00335e61525c4cfb23df11e4963f0d391f128172401ae60138286cf535b3007d408777b6a558a30345d8a753e99d8ca1374a7f14ab128c88448c9a25986ca9696bdf813659ae720b190505e81f8e833f22b2b9e2aab44661469a1f82f507996f159e2c1523013c16a98ff7c7b78d811b75e06632ac3bd39e360e1db833a14487ffaf3a3d2ab04a076947c26e8370481ad345196b4ff23bc5225d56cbf8290f33b4ff39544a1e8ff0e50be1a3314172913060b8ca4829a157e8fd6e0c98df8abc6778824ba06a11e240d5ba4c10973ac12e254b1f293c42cb9d52fcb45219ad4660d02c413309f689a6e0d91a69846c5f886844eb6ddfd5c4430d4fda2e241629dda970101f7bf5313708cf46f40dd05985ac0919b08e22be81961fd6ab692c9e03bc1542d639d3b594be6c3418df3c03b5e860d1d9106f1401b492b8fb46795f5132ab947fb3633b2fda5a9c93fea90bb8a365cbfc218298f895e53c40d83bf0ed3ca4881c182e8f8bb9b627dac68dfcb441fe65faf5ca7560371e7fdd6dd8203bf9ffb114365af71a259611dc1240e0c38e4d4f8b5d9e8f272c60cfdf5be5efa3bb7336650c467ad878bc5edd4cd762b9d6363ea9b0d71ae6ba0a7a6159fb70ec1a82a3ffa1e507e33aaab8fef1f28d77a7e8e998490e4d42566915e47ff70d993f12d3d8060f7212e51cd0a837f8330de6650538e2fec870a5cce772e46eddad033dc276538129a9dabdf99b342edc7ca37cda28706869f81a6f594a38f50b81a1a343094b113f1df19f4c4f57b93f73f367b58ba04eb5c224e3a615d97ed8e17504966aed1f2efc860dff1961502638e9f0022ae9a37e96c8513071c6dce00cbc73d7793422c3dd27ec6b5457e290942eb0a5acd538ec8654abec093ccfdb58c8210d632aeb9aa17ca1ef97d67698fab1f9122a707e69cc186ddb5148f1ab52e51e07c343b635607c0a050d21ac77af5c96f73eac7637bc5c0ddfcc4d600a5114ef5cba3b9b01ce22a3ca996a42a6db1696026167734db9a5ef552fc357e256fdcc6cde62088cf80714e8d95442caec8f17e1dc4f96f85c60fae2f20b47bd753a9dbed4b350f4bff5896b94cad84cb097771fcc36480d1e248c4bdaab93058c99fefbd21d2b66844ba162758c9aae0c8935e857d4cb8578655810b656c4dac316503150f8eba1b53ccd0a3e6e59f590b6c6690867e7fbd6bb8ec2e0fb5fdb411d89edcdf583cf97ac31826e7fa2738044a76b87072d939ddf6a2583c7d785ddf249c383e7ecb0b385b1391f336c6ed1a2bf90e71909a526c4cb2cf9d2b7b916dc80acb2b0f5c90e3124a4509d55a11876b5851a21686a3b59880af84c7c6437a59349a54f5e44036a8d68df78a468dedad4d1969655543bcc990d11dc12a27ecf551c1e8f0be0327dec4daf1320fc9b89a97dc1b1d3363efbf22bedd04c419c07fe67736f1357b8bae8e29b1ecd25ef4372be28d84bb4d3252485b7fcebde2c3bafa467535f541df032f0df38c0c9c4a2df9c2284c5e9388c832d8e9db1e7b5bfcad1a03a399a7cc436f9fb4e60841ebd08661f3d76ffbd11089174b7db5ba9e8eac08e821f349eac7f3d17008eaa0fec05148007852ebe0deca0c1cdf42895d329e26589cddfd976e62ad32ffc627fdf8d2768d34322a1b126f38f54d5ba0cc3ffa0e516744c95cea5ed5d978622cae122fa62f02d7765dc17f8d7276c1bdd84ebc06df7c8bad6c20d7e06c33fab3dc0fcd2c38310a3435086485f07381b7d2aa5fc97b65a8862a660d505b3c0a4b468dc4fd228ba1ac074cd0f3d0c4137c7ccb61abc849b3898ed97014b7599cebef93ce9e79394b3c4b20fa99e3d2476a7aa251729c5f419d55d014c52cc1e85feb7a98753eb5bdfedb27f9b0aab1987a4a16ce6d69d5b0330578efe04365e7dbfb05072a560dbd4dff94748f6c4d18af1c03e7392df68bd5bc8651776b0361f68f65bfbbe34aef8e0b5cefa7f4db4f9d2a5b28e2bfd9fcb9d0585d73b694078b6fb8b2eba1ae83134d53f5fe613058fc4a28b5ac2697b2ed24933389f29f4901e9aa7deeb168a5c838a1780efa3eea440d3af800b59e953e28faac809b6f4b94df1d7f683442a86fdeeb20c3f90b9411a0b17ef4ee59fb3d1eceb58a29868fea81274974d5365247285e4b743276cdfcd65e12e7c99e58f775dade58eceb557123f45fdf3101acc179e451229f91b6e0c60348a02de792ccf65b52a64efc8dba0749cad2c2f8a1e2b25df906c7ff9b228a3b12b5776400953e65f0f9c9bb903f4ab6a4aa9923e040bb93f913a8e6a4062a820e1bb2d14a0a3f29bb798eb78a4af60f5872072e74c29c7d37644a812fdd9ab0301c37487b838664e591d0fe41d703fbbc22b7c5f0a9044618e4fb73fc04c9724a83381ea4cf216abb057d7b1aa542d2f3ad6ac21eb2947958823e46c785d7cf6f98cc170056f3cc95747d0666a30cba653beac31e8460dab4cc3f4d97016b8eb947e941b8f1dcebd9615519e839acba397de9dfee642d04c2acd46e2ea117977a9fb80535d25556821f63589b4fe3ac8a5f2fdf8f496b85f7fce6db3e5384f7cbb6dcef439cc68b840e77b64d3760ddc03894cfbfc68fce3e2b30347584b38940eca4c22f060cb9d7dee6595afd8355e7ab87a0923c04025510d7eb018f93b328268c939090860118afcdc9fa86c0b51be273d19f8773d4d609829d903f8e1ced14841b0c5f5dbce2e06bc97501c70ec4c736240f136c09102267b0452020d4cc309c752aab67e61dee16746241fc16e160fde1a3b8286d6e3646e428ff56262490157504877511f7866356783e2ba084cdd51943ea20ed8efca49e2e8632a8507235a6a94e8d6a10348f41e1b04db5ef2264415ac7b7e87b714c242c6199df8b39fa577b1a34b892f3a1827beda61abe12eb24d5c0b3be229931114e4777f1fa7e9cc42bf62ce350d0d645abeaa5f72191959c36ccc56baca17f5f016b3f981c6c28475f6b29775d76ede17a0893d34658a0a35e9d1de2cfce31ddb9d14abf982996396e18af44d9d52041300af6eaf636acb575543cb349a6703ed29a205bfd0f3feb3f7807b5e772170d53475da192cad5ae3660f05d9286b40b7993cf4a2ef1c73849768c9de6e1341f84253f67ba035cc811bc681c83096acefcf8f0d791ed086fbb29184a0af360cf01078c6eb67f68a64f461970604c52ad15bc642563739d709ac4692610d0a638cd24064b2f2b0a6a2e82f3da83c23e215ec3ba78f0ff2cafcc1a2397622213b9cefea26d4377396e4a08650b83e5b324a2edf01342e67a6fb87330f9f</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">密码输入框上描述性内容</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">
     </div>
 
     
@@ -344,7 +341,6 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B"><span class="nav-text">快速开始</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0"><span class="nav-text">创建一篇文章</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E6%9C%AC%E5%9C%B0%E6%9C%8D%E5%8A%A1"><span class="nav-text">启动本地服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6"><span class="nav-text">生成静态文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E5%8D%9A%E5%AE%A2"><span class="nav-text">部署博客</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
