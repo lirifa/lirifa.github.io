@@ -21,25 +21,22 @@
     var CONFIG = {"hostname":"lirifa.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#2bb5d4","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}}};
   </script>
 
-  <meta name="description" content="CDN的全称是Content Delivery Network，即内容分发网络。CDN是构建在网络之上的内容分发网络，依靠部署在各地的边缘服务器，通过中心平台的负载均衡、内容分发、调度等功能模块，使用户就近获取所需内容，降低网络拥塞，提高用户访问响应速度和命中率。CDN的关键技术主要有内容存储和分发技术。 ——百度百科">
+  <meta name="description" content="WebSocket 是由HTML5提出的一个独立的协议标准。WebSocket可以分为协议（Protocol）和API两部分，分别由IETF和W3C制定了标准。它跟HTTP协议基本没有关系，只是为了兼容现有浏览器的握手规范而对 HTTP 协议的一种补充。更加确切的说 WebSocket 利用了 HTTP 协议来建立连接，仅此而已。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="免费cdn：jsdelivr+github 使用方法">
-<meta property="og:url" content="https://lirifa.github.io/%E5%85%8D%E8%B4%B9cdn%EF%BC%9Ajsdelivr-github-%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95.html">
+<meta property="og:title" content="WebSocket协议介绍">
+<meta property="og:url" content="https://lirifa.github.io/posts/51390220/index.html">
 <meta property="og:site_name" content="Rafa&#39;s Blog">
-<meta property="og:description" content="CDN的全称是Content Delivery Network，即内容分发网络。CDN是构建在网络之上的内容分发网络，依靠部署在各地的边缘服务器，通过中心平台的负载均衡、内容分发、调度等功能模块，使用户就近获取所需内容，降低网络拥塞，提高用户访问响应速度和命中率。CDN的关键技术主要有内容存储和分发技术。 ——百度百科">
+<meta property="og:description" content="WebSocket 是由HTML5提出的一个独立的协议标准。WebSocket可以分为协议（Protocol）和API两部分，分别由IETF和W3C制定了标准。它跟HTTP协议基本没有关系，只是为了兼容现有浏览器的握手规范而对 HTTP 协议的一种补充。更加确切的说 WebSocket 利用了 HTTP 协议来建立连接，仅此而已。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/lirifa/cdn/img/Snipaste_2021-01-08_15-06-41.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/lirifa/cdn/img/Snipaste_2021-01-08_15-07-28.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/lirifa/cdn@main/img/Snipaste_2021-01-08_15-30-30.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/lirifa/cdn@main/img/Snipaste_2021-01-08_15-59-42.png">
-<meta property="article:published_time" content="2021-01-07T09:03:56.000Z">
-<meta property="article:modified_time" content="2026-03-20T16:27:05.924Z">
+<meta property="og:image" content="https://s3.ax1x.com/2020/11/18/Dnp0vn.png">
+<meta property="article:published_time" content="2020-11-18T09:54:17.000Z">
+<meta property="article:modified_time" content="2026-03-20T16:42:15.704Z">
 <meta property="article:author" content="Rafa">
-<meta property="article:tag" content="其他">
+<meta property="article:tag" content="websocket">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/lirifa/cdn/img/Snipaste_2021-01-08_15-06-41.png">
+<meta name="twitter:image" content="https://s3.ax1x.com/2020/11/18/Dnp0vn.png">
 
-<link rel="canonical" href="https://lirifa.github.io/%E5%85%8D%E8%B4%B9cdn%EF%BC%9Ajsdelivr-github-%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95.html">
+<link rel="canonical" href="https://lirifa.github.io/posts/51390220/">
 
 
 <script id="page-configurations">
@@ -52,7 +49,7 @@
   };
 </script>
 
-  <title>免费cdn：jsdelivr+github 使用方法 | Rafa's Blog</title>
+  <title>WebSocket协议介绍 | Rafa's Blog</title>
   
 
 
@@ -217,7 +214,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://lirifa.github.io/%E5%85%8D%E8%B4%B9cdn%EF%BC%9Ajsdelivr-github-%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95.html">
+    <link itemprop="mainEntityOfPage" href="https://lirifa.github.io/posts/51390220/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://avatars.githubusercontent.com/u/44889418?v=4">
@@ -230,7 +227,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          免费cdn：jsdelivr+github 使用方法
+          WebSocket协议介绍
         </h1>
 
         <div class="post-meta">
@@ -240,14 +237,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-01-07 17:03:56" itemprop="dateCreated datePublished" datetime="2021-01-07T17:03:56+08:00">2021-01-07</time>
+              <time title="创建时间：2020-11-18 17:54:17" itemprop="dateCreated datePublished" datetime="2020-11-18T17:54:17+08:00">2020-11-18</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2026-03-21 00:27:05" itemprop="dateModified" datetime="2026-03-21T00:27:05+08:00">2026-03-21</time>
+                <time title="修改时间：2026-03-21 00:42:15" itemprop="dateModified" datetime="2026-03-21T00:42:15+08:00">2026-03-21</time>
               </span>
 
           
@@ -261,50 +258,48 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <blockquote>
-<p>CDN的全称是Content Delivery Network，即内容分发网络。CDN是构建在网络之上的内容分发网络，依靠部署在各地的边缘服务器，通过中心平台的负载均衡、内容分发、调度等功能模块，使用户就近获取所需内容，降低网络拥塞，提高用户访问响应速度和命中率。CDN的关键技术主要有内容存储和分发技术。</p>
-<p align="right">——百度百科</p></blockquote>
+        <p>WebSocket 是由HTML5提出的一个独立的协议标准。WebSocket可以分为协议（Protocol）和API两部分，分别由IETF和W3C制定了标准。它跟HTTP协议基本没有关系，只是为了兼容现有浏览器的握手规范而对 HTTP 协议的一种补充。更加确切的说 WebSocket 利用了 HTTP 协议来建立连接，仅此而已。</p>
 <span id="more"></span>
 
-<p>放在Github的资源在国内加载速度比较慢，因此需要使用CDN加速来优化网站打开速度，jsDelivr + Github便是免费且好用的CDN，非常适合博客网站使用。</p>
-<h2 id="1-新建Github仓库"><a href="#1-新建Github仓库" class="headerlink" title="1.新建Github仓库"></a>1.新建Github仓库</h2><p><img src="https://cdn.jsdelivr.net/gh/lirifa/cdn/img/Snipaste_2021-01-08_15-06-41.png" alt="新建Github仓库"></p>
-<h2 id="2-克隆Github仓库到本地"><a href="#2-克隆Github仓库到本地" class="headerlink" title="2.克隆Github仓库到本地"></a>2.克隆Github仓库到本地</h2><p><img src="https://cdn.jsdelivr.net/gh/lirifa/cdn/img/Snipaste_2021-01-08_15-07-28.png" alt="克隆Github仓库"></p>
-<h2 id="3、上传资源"><a href="#3、上传资源" class="headerlink" title="3、上传资源"></a>3、上传资源</h2><p>复制需要上传的资源到本地git仓库（注：jsDelivr不支持加载超过20M的资源），在本地git仓库目录下右键 Git Bash Here，执行以下命令：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git status                    //查看状态</span><br><span class="line">git add .                     //添加所有文件到暂存区</span><br><span class="line">git commit -m &#x27;第一次提交&#x27;      //把文件提交到仓库</span><br><span class="line">git push                      //推送至远程仓库</span><br></pre></td></tr></table></figure>
-
-<h2 id="4、发布仓库"><a href="#4、发布仓库" class="headerlink" title="4、发布仓库"></a>4、发布仓库</h2><p>点击发布<br><img src="https://cdn.jsdelivr.net/gh/lirifa/cdn@main/img/Snipaste_2021-01-08_15-30-30.png" alt="发布一个版本"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/lirifa/cdn@main/img/Snipaste_2021-01-08_15-59-42.png" alt="jsdelivr网站"></p>
-<p>从jsdelivr官网发现我们可以有多种方式引用仓库文件<br>分别是</p>
-<ul>
-<li>release</li>
-<li>commit</li>
-<li>branch<br>大多数情况下，我们作为图床使用的话，用branch方式访问比较方便</li>
-</ul>
-<h2 id="5、通过jsDelivr引用资源"><a href="#5、通过jsDelivr引用资源" class="headerlink" title="5、通过jsDelivr引用资源"></a>5、通过jsDelivr引用资源</h2><p>使用方法：</p>
+<h1 id="WebSocket-协议介绍"><a href="#WebSocket-协议介绍" class="headerlink" title="WebSocket 协议介绍"></a>WebSocket 协议介绍</h1><p>现在 WebSocket 协议已经成了标准协议，所有主流浏览器都已经很好的支持其基础功能。</p>
+<p>WebSocket 协议实现了浏览器与服务器全双工通信，能更好的节省服务器资源和带宽并达到实时通讯的目的。它与HTTP一样通过已建立的TCP连接来传输数据，但是它和HTTP最大不同是：</p>
 <ol>
-<li><code>https://cdn.jsdelivr.net/gh/你的用户名/你的仓库名@发布的版本号/文件路径</code></li>
-<li><code>https://cdn.jsdelivr.net/gh/你的用户名/你的仓库名@commit/文件路径</code></li>
-<li><code>https://cdn.jsdelivr.net/gh/你的用户名/你的仓库名@branch/文件路径</code></li>
+<li><p>WebSocket是一种双向通信协议。在建立连接后，WebSocket服务器端和客户端都能主动向对方发送或接收数据，就像Socket一样；</p>
+</li>
+<li><p>WebSocket需要像TCP一样，先建立连接，连接成功后才能相互通信。</p>
+</li>
 </ol>
-<p>例如</p>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="https://cdn.jsdelivr.net/gh/TRHX/CDN-for-itrhx.com@1.0/images/trhx.png">https://cdn.jsdelivr.net/gh/TRHX/CDN-for-itrhx.com@1.0/images/trhx.png</a><br>  <a target="_blank" rel="noopener" href="https://cdn.jsdelivr.net/gh/TRHX/CDN-for-itrhx.com@2.0.1/css/style.css">https://cdn.jsdelivr.net/gh/TRHX/CDN-for-itrhx.com@2.0.1/css/style.css</a><br>  <a target="_blank" rel="noopener" href="https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.3//The%20Pet%20Girl%20of%20Sakurasou.mp4">https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.3//The%20Pet%20Girl%20of%20Sakurasou.mp4</a></p>
-</blockquote>
-<p>注意：版本号不是必需的，是为了区分新旧资源，如果不使用版本号，将会直接引用最新资源，除此之外还可以使用某个范围内的版本，查看所有资源等，具体使用方法如下：</p>
-<ul>
-<li><p>&#x2F;&#x2F; 加载任何Github发布、提交或分支<br><a target="_blank" rel="noopener" href="https://cdn.jsdelivr.net/gh/user/repo@version/file">https://cdn.jsdelivr.net/gh/user/repo@version/file</a></p>
-</li>
-<li><p>&#x2F;&#x2F; 加载 jQuery v3.2.1<br><a target="_blank" rel="noopener" href="https://cdn.jsdelivr.net/gh/jquery/jquery@3.2.1/dist/jquery.min.js">https://cdn.jsdelivr.net/gh/jquery/jquery@3.2.1/dist/jquery.min.js</a></p>
-</li>
-<li><p>&#x2F;&#x2F; 使用版本范围而不是特定版本<br><a target="_blank" rel="noopener" href="https://cdn.jsdelivr.net/gh/jquery/jquery@3.2/dist/jquery.min.js">https://cdn.jsdelivr.net/gh/jquery/jquery@3.2/dist/jquery.min.js</a><br><a target="_blank" rel="noopener" href="https://cdn.jsdelivr.net/gh/jquery/jquery@3/dist/jquery.min.js">https://cdn.jsdelivr.net/gh/jquery/jquery@3/dist/jquery.min.js</a></p>
-</li>
-<li><p>&#x2F;&#x2F; 完全省略该版本以获取最新版本<br><a target="_blank" rel="noopener" href="https://cdn.jsdelivr.net/gh/jquery/jquery/dist/jquery.min.js">https://cdn.jsdelivr.net/gh/jquery/jquery/dist/jquery.min.js</a><br><a target="_blank" rel="noopener" href="https://cdn.jsdelivr.net/gh/jquery/jquery@latest/dist/jquery.min.js">https://cdn.jsdelivr.net/gh/jquery/jquery@latest/dist/jquery.min.js</a></p>
-</li>
-<li><p>&#x2F;&#x2F; 将“.min”添加到任何JS&#x2F;CSS文件中以获取缩小版本，如果不存在，将为会自动生成<br><a target="_blank" rel="noopener" href="https://cdn.jsdelivr.net/gh/jquery/jquery@3.2.1/src/core.min.js">https://cdn.jsdelivr.net/gh/jquery/jquery@3.2.1/src/core.min.js</a></p>
-</li>
-<li><p>&#x2F;&#x2F; 在末尾添加 &#x2F; 以获取资源目录列表<br><a target="_blank" rel="noopener" href="https://cdn.jsdelivr.net/gh/jquery/jquery/">https://cdn.jsdelivr.net/gh/jquery/jquery/</a></p>
-</li>
-</ul>
+<p><img src="https://s3.ax1x.com/2020/11/18/Dnp0vn.png" alt="握手示意图"></p>
+<p>上图对比可以看出，相对于传统HTTP每次请求-应答都需要客户端与服务端建立连接的模式，WebSocket是类似Socket的TCP长连接通讯模式。一旦WebSocket连接建立后，后续数据都以帧序列的形式传输。在客户端断开WebSocket连接或Server端中断连接前，不需要客户端和服务端重新发起连接请求。在海量并发及客户端与服务器交互负载流量大的情况下，极大的节省了网络带宽资源的消耗，有明显的性能优势，且客户端发送和接受消息是在同一个持久连接上发起，实时性优势明显。</p>
+<h1 id="WebSocket-协议的建立过程"><a href="#WebSocket-协议的建立过程" class="headerlink" title="WebSocket 协议的建立过程"></a>WebSocket 协议的建立过程</h1><p>WebSocket 连接必须由浏览器发起，请求协议是一个标准的HTTP请求（也就是说，WebSocket的建立是依赖HTTP的）。请求报文格式如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable constant_">GET</span> <span class="attr">ws</span>:<span class="comment">//localhost:3000/ws/chat HTTP/1.1</span></span><br><span class="line"><span class="title class_">Host</span>: localhost</span><br><span class="line"><span class="title class_">Upgrade</span>: websocket</span><br><span class="line"><span class="title class_">Connection</span>: <span class="title class_">Upgrade</span></span><br><span class="line"><span class="title class_">Origin</span>: <span class="attr">http</span>:<span class="comment">//localhost:3000</span></span><br><span class="line"><span class="title class_">Sec</span>-<span class="title class_">WebSocket</span>-<span class="title class_">Key</span>: client-random-string</span><br><span class="line"><span class="title class_">Sec</span>-<span class="title class_">WebSocket</span>-<span class="title class_">Version</span>: <span class="number">13</span></span><br></pre></td></tr></table></figure>
+<p>该请求和普通的HTTP请求有几点不同：</p>
+<ol>
+<li>其中 HTTP 头部字段 Upgrade: websocket 和 Connection: Upgrade 很重要，告诉服务器通信协议将发生改变，转为 WebSocket 协议。</li>
+<li>Sec-WebSocket-Key是用于标识这个连接，并非用于加密数据；</li>
+<li>Sec-WebSocket-Version指定了WebSocket的协议版本。</li>
+</ol>
+<p>支持 WebSocket 的服务器端在确认以上请求后，应返回状态码为101 Switching Protocols的响应：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable constant_">HTTP</span>/<span class="number">1.1</span> <span class="number">101</span> <span class="title class_">Switching</span> <span class="title class_">Protocols</span></span><br><span class="line"><span class="title class_">Upgrade</span>: websocket</span><br><span class="line"><span class="title class_">Connection</span>: <span class="title class_">Upgrade</span></span><br><span class="line"><span class="title class_">Sec</span>-<span class="title class_">WebSocket</span>-<span class="title class_">Accept</span>: nRu4KAPUPjjWYrnzxDVeqOxCvlM=</span><br></pre></td></tr></table></figure>
+
+<p>该响应代码 101 表示本次连接的HTTP协议即将被更改，更改后的协议就是 Upgrade: websocket 指定的WebSocket协议。</p>
+<p>版本号和子协议规定了双方能理解的数据格式，以及是否支持压缩等等。如果仅使用 WebSocket 的 API ，就不需要关心这些。</p>
+<p>现在，一个 WebSocket 连接就建立成功，浏览器和服务器就可以随时主动发送消息给对方。消息有两种，一种是文本，一种是二进制数据。通常，我们可以发送JSON格式的文本，这样，在浏览器处理起来就十分容易。</p>
+<p>为什么 WebSocket 连接可以实现全双工通信而 HTTP 连接不行呢？实际上HTTP协议是建立在TCP协议之上的，TCP协议本身就实现了全双工通信，但是HTTP 协议的请求－应答机制限制了全双工通信。WebSocket连接建立以后，接下来的通信就不使用 HTTP 协议了，直接互相发数据。</p>
+<p>安全的 WebSocket 连接机制和 HTTPS 类似。首先，浏览器用 wss:&#x2F;&#x2F;xxx 创建 WebSocket 连接时，会先通过HTTPS创建安全的连接，然后，该HTTPS 连接升级为 WebSocket 连接，底层通信走的仍然是安全的 SSL&#x2F;TLS 协议。</p>
+<h1 id="WebSocket-、Ajax-轮询-和-Long-Poll-长轮询-原理解析"><a href="#WebSocket-、Ajax-轮询-和-Long-Poll-长轮询-原理解析" class="headerlink" title="WebSocket 、Ajax 轮询 和 Long Poll(长轮询) 原理解析"></a>WebSocket 、Ajax 轮询 和 Long Poll(长轮询) 原理解析</h1><p>说到 WebSocket ，那就不得不说说 Ajax 轮询 和 Long Poll(长轮询)。</p>
+<p>Ajax 轮询 和 Long Poll(长轮询) 都是 HTTP 请求的应用，都属于非持久连接。</p>
+<p>首先来说说 Ajax 轮询。Ajax 轮询的原理非常简单，让浏览器每隔一定的时间就发送一次请求，询问服务器是否有新信息。</p>
+<p>Long Poll(长轮询) 其实原理跟 Ajax 轮询 差不多，都是采用轮询的方式，不过采取的是阻塞模型，也就是说，客户端发起连接后，如果没消息，服务器不会马上告诉你没消息，而是将这个请求挂起（pending），直到有消息才返回。返回完成或者客户端主动断开后，客户端再次建立连接，周而复始。我们可以看出Long Poll(长轮询) 已经具备了一定的实时性。</p>
+<p>上面这两种应用都是非常消耗资源。Ajax 轮询需要服务器有很快的处理速度和资源。Long Poll(长轮询) 需要有很高的并发，也就是说同时连接数的能力。同时也受到客户端的连接数限制，比如老早的IE6，客户端同事连接数为2。尽管如此，在过去 Ajax 轮询 和 Long Poll(长轮询) 还是有广泛的应用，特别是实时聊天，短消息推送等方面， Long Poll(长轮询) 是除了 Flash 之外唯一的选择。</p>
+<p>相对于 HTTP 连接的非持久连接来说，WebSocket 则是持久连接。</p>
+<p>上面已经说了 WebSocket 是类似 Socket 的TCP长连接通讯模式。一旦 WebSocket 连接建立后，后续数据都以帧序列的形式传输。而且浏览器和服务器就可以随时主动发送消息给对方，是全双工通信。在海量并发及客户端与服务器交互负载流量大的情况下，极大的节省了网络带宽资源的消耗，有明显的性能优势，且客户端发送和接受消息是在同一个持久连接上发起，实时性优势明显。</p>
+<h1 id="WebSocket-API"><a href="#WebSocket-API" class="headerlink" title="WebSocket API"></a>WebSocket API</h1><p>WebSocket 客户端的 API 和流程非常简单：创建 WebSocket 对象，然后指定 open、message等事件的回调即可。其中 message 是客户端与服务器端通过WebSocket通信的关键事件，想要在收到服务器通知后做点什么，写在message事件的回调函数里就好了：</p>
+<h1 id="WebSocket-构造函数"><a href="#WebSocket-构造函数" class="headerlink" title="WebSocket 构造函数"></a>WebSocket 构造函数</h1><p>WebSocket 对象作为一个构造函数，用于新建 WebSocket 实例。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ws = <span class="keyword">new</span> <span class="title class_">WebSocket</span>(<span class="string">&#x27;ws://localhost:8080/ws&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>执行上面语句之后，客户端就会与服务器进行连接。实例对象的所有属性和方法参见 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/WebSocket">https://developer.mozilla.org/en-US/docs/Web/API/WebSocket</a></p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a target="_blank" rel="noopener" href="https://www.css88.com/archives/9293">https://www.css88.com/archives/9293</a></p>
 
     </div>
 
@@ -315,7 +310,7 @@
       <footer class="post-footer">
           
           <div class="post-tags">
-              <a href="/tags/%E5%85%B6%E4%BB%96/" rel="tag"><i class="fa fa-tag"></i> 其他</a>
+              <a href="/tags/websocket/" rel="tag"><i class="fa fa-tag"></i> websocket</a>
           </div>
 
         
@@ -324,12 +319,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/H5-video%E5%BC%80%E5%8F%91%E9%97%AE%E9%A2%98%E5%8F%8A%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%E7%82%B9.html" rel="prev" title="H5 video开发问题及相关知识点">
-      <i class="fa fa-chevron-left"></i> H5 video开发问题及相关知识点
+    <a href="/posts/2043297485/" rel="prev" title="hexo接入valine评论踩坑">
+      <i class="fa fa-chevron-left"></i> hexo接入valine评论踩坑
     </a></div>
       <div class="post-nav-item">
-    <a href="/js%E4%B8%AD%E7%9A%84%E9%97%AD%E5%8C%85.html" rel="next" title="js中的闭包">
-      js中的闭包 <i class="fa fa-chevron-right"></i>
+    <a href="/posts/2952838103/" rel="next" title="DOM事件流">
+      DOM事件流 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -394,7 +389,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%96%B0%E5%BB%BAGithub%E4%BB%93%E5%BA%93"><span class="nav-text">1.新建Github仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%85%8B%E9%9A%86Github%E4%BB%93%E5%BA%93%E5%88%B0%E6%9C%AC%E5%9C%B0"><span class="nav-text">2.克隆Github仓库到本地</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E3%80%81%E4%B8%8A%E4%BC%A0%E8%B5%84%E6%BA%90"><span class="nav-text">3、上传资源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4%E3%80%81%E5%8F%91%E5%B8%83%E4%BB%93%E5%BA%93"><span class="nav-text">4、发布仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5%E3%80%81%E9%80%9A%E8%BF%87jsDelivr%E5%BC%95%E7%94%A8%E8%B5%84%E6%BA%90"><span class="nav-text">5、通过jsDelivr引用资源</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#WebSocket-%E5%8D%8F%E8%AE%AE%E4%BB%8B%E7%BB%8D"><span class="nav-text">WebSocket 协议介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#WebSocket-%E5%8D%8F%E8%AE%AE%E7%9A%84%E5%BB%BA%E7%AB%8B%E8%BF%87%E7%A8%8B"><span class="nav-text">WebSocket 协议的建立过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#WebSocket-%E3%80%81Ajax-%E8%BD%AE%E8%AF%A2-%E5%92%8C-Long-Poll-%E9%95%BF%E8%BD%AE%E8%AF%A2-%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90"><span class="nav-text">WebSocket 、Ajax 轮询 和 Long Poll(长轮询) 原理解析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#WebSocket-API"><span class="nav-text">WebSocket API</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#WebSocket-%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="nav-text">WebSocket 构造函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-text">参考资料</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
