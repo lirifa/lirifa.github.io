@@ -346,12 +346,18 @@
 </ol>
 <p>只有深刻理解了一个网页从 URL 到页面展示的整个过程中发生了什么，我们才能知道做优化的时候，可以从哪些方面入手</p>
 <h2 id="性能指标"><a href="#性能指标" class="headerlink" title="性能指标"></a>性能指标</h2><ul>
-<li>FCP</li>
-<li>LCP</li>
-<li>TTFB</li>
-<li>TTI</li>
+<li>FCP: 首次绘制内容时间（First Contentful Paint）, 时间越短意味着页面白屏时间越短。低于1.8s代表良好，1.8s到3s之间代表待改善，3s以上代表差。</li>
+<li>LCP: 最大绘制内容时间（Largest Contentful Paint）。低于2.5s代表良好，2.5s到4s之间代表待改善，4s以上代表差。</li>
+<li>FID：首次输入延迟，评估用户首次与页面交互时的响应速度。良好的FID应小于100毫秒。</li>
+<li>CLS：累积布局偏移（Cumulative Layout Shift），衡量页面上元素位置发生变化的频率和程度。低于0.1s代表良好，0.1s到0.25s之间代表待改善，0.25s以上代表差。</li>
+<li>TTFB：首个字节返回时间（Time To First Byte），时间越短意味着请求响应越快。低于800ms代表良好，800ms到1800ms之间代表待改善，1800ms以上代表差。</li>
+<li>FID: (First Input Delay),页面首次加载后用户第一次交互‌（如点击、按键）到浏览器实际响应的时间。</li>
+<li>INP：下次渲染可交互时间（Interaction Next Paint），整个页面会话期间所有可交互操作‌（点击、触摸、键盘输入）的延迟。并取最慢的一次（或接近最慢的）作为最终得分，反映整体交互体验‌<br>，低于200ms代表良好，200ms到500ms之间代表待改善，500ms以上代表差。</li>
+<li>…</li>
+<li>核心指标：LCP、CLS、INP</li>
 </ul>
-<h2 id="性能指标的计算"><a href="#性能指标的计算" class="headerlink" title="性能指标的计算"></a>性能指标的计算</h2><h3 id="JavaScript库：web-vitals"><a href="#JavaScript库：web-vitals" class="headerlink" title="JavaScript库：web-vitals"></a>JavaScript库：web-vitals</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; onFCP, onLCP, <span class="variable constant_">TTFB</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;web-vitals&#x27;</span></span><br><span class="line"><span class="title function_">onFCP</span>(<span class="variable language_">console</span>.<span class="property">log</span>)</span><br><span class="line"><span class="title function_">onLCP</span>(<span class="variable language_">console</span>.<span class="property">log</span>)</span><br><span class="line"><span class="title function_">TTFB</span>(<span class="variable language_">console</span>.<span class="property">log</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="性能指标的计算"><a href="#性能指标的计算" class="headerlink" title="性能指标的计算"></a>性能指标的计算</h2><h3 id="JavaScript库：web-vitals"><a href="#JavaScript库：web-vitals" class="headerlink" title="JavaScript库：web-vitals"></a>JavaScript库：web-vitals</h3><p>web-vitals是Google维护的npm包，提供了常见性能指标的处理方法，支持业务自定义收集处理性能指标数据。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; onFCP, onLCP, onFID, onTTFB &#125; <span class="keyword">from</span> <span class="string">&#x27;web-vitals&#x27;</span></span><br><span class="line"><span class="title function_">onFCP</span>(<span class="variable language_">console</span>.<span class="property">log</span>)</span><br><span class="line"><span class="title function_">onLCP</span>(<span class="variable language_">console</span>.<span class="property">log</span>)</span><br><span class="line"><span class="title function_">onTTFB</span>(<span class="variable language_">console</span>.<span class="property">log</span>)</span><br></pre></td></tr></table></figure>
 
 <h3 id="performance-api"><a href="#performance-api" class="headerlink" title="performance api"></a>performance api</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">entryHandler</span> = (<span class="params">list</span>) =&gt; &#123;</span><br><span class="line">   <span class="keyword">for</span>(<span class="keyword">const</span> entry <span class="keyword">of</span> list.<span class="title function_">getEntries</span>()) &#123;</span><br><span class="line">      <span class="keyword">if</span> (entry.<span class="property">entryType</span> === <span class="string">&#x27;largest-contentful-paint&#x27;</span>) &#123;</span><br><span class="line">         <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;LCP:&#x27;</span>, entry.<span class="property">startTime</span>);</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (entry.<span class="property">entryType</span> === <span class="string">&#x27;first-input&#x27;</span>) &#123;</span><br><span class="line">         <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;FID:&#x27;</span>, entry.<span class="property">processingStart</span> - entry.<span class="property">startTime</span>);</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (entry.<span class="property">entryType</span> === <span class="string">&#x27;paint&#x27;</span>) &#123;</span><br><span class="line">         <span class="keyword">if</span> (entry.<span class="property">name</span> === <span class="string">&#x27;first-contentful-paint&#x27;</span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;FCP:&#x27;</span>, entry.<span class="property">startTime</span>);</span><br><span class="line">         &#125;</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> observer = <span class="keyword">new</span> <span class="title class_">PerformanceObserver</span>(entryHandler)</span><br><span class="line">observer.<span class="title function_">observe</span>(&#123; </span><br><span class="line">    <span class="attr">entryTypes</span>: [<span class="string">&#x27;largest-contentful-paint&#x27;</span>, <span class="string">&#x27;first-input&#x27;</span>, <span class="string">&#x27;paint&#x27;</span>, <span class="string">&#x27;layout-shift&#x27;</span>],</span><br><span class="line">  <span class="attr">buffered</span>: <span class="literal">true</span> <span class="comment">// 获取历史条目</span></span><br><span class="line"> &#125;)</span><br></pre></td></tr></table></figure>
 
@@ -361,22 +367,109 @@
 <li>network</li>
 <li>performance</li>
 </ul>
-<h2 id="优化手段"><a href="#优化手段" class="headerlink" title="优化手段"></a>优化手段</h2><ol>
-<li>网络层面的优化</li>
-<li>渲染层面的优化</li>
+<h2 id="优化手段"><a href="#优化手段" class="headerlink" title="优化手段"></a>优化手段</h2><p>   web性能优化有很多手段，总体分为两大类</p>
+<ol>
+<li>网络层面的优化：更快的网络请求、更少的网络请求</li>
+<li>渲染层面的优化：更快的渲染页面、更少的渲染节点</li>
 </ol>
-<h3 id="网络层面"><a href="#网络层面" class="headerlink" title="网络层面"></a>网络层面</h3><h4 id="浏览器缓存"><a href="#浏览器缓存" class="headerlink" title="浏览器缓存"></a>浏览器缓存</h4><ul>
-<li>servier worker</li>
-<li>http cache</li>
+<p>从刚刚讨论的 【URL 到页面加载完成】的过程中我们可以针对每个流程做出相应的优化</p>
+<h4 id="浏览器缓存"><a href="#浏览器缓存" class="headerlink" title="浏览器缓存"></a>浏览器缓存</h4><p>   一、 优先用：强缓存（完全不发请求，最快）</p>
+<ol>
+<li><p>静态资源设置长 Cache-Control</p>
+<ul>
+<li>HTML 一般不做强缓存（或短时间）</li>
+<li>JS &#x2F; CSS &#x2F; 图片 &#x2F; 字体：设置 max-age&#x3D;31536000（1 年）</li>
+<li>浏览器直接从 Memory &#x2F; Disk Cache 读取，不发网络请求</li>
 </ul>
+</li>
+<li><p>资源文件名带哈希（版本化）</p>
+</li>
+</ol>
 <h4 id="DNS-优化"><a href="#DNS-优化" class="headerlink" title="DNS 优化"></a>DNS 优化</h4><ul>
 <li>减少 DNS 查询次数 提前解析关键域名 提升页面加载速度</li>
 <li>DNS 预取 (DNS Prefetching)</li>
 <li><link rel="dns-preftch" href="//cdn.example.com"></li>
-<li>避免过度预解析</li>
+<li>dns-prefetch仅限于DNS解析，而preconnect不仅包含DNS解析还包括TCP连接建立以及可能的TLS握手</li>
 <li><link ref="preconnect" href="https://cdn.example.com"></li>
-<li></li>
+<li>由于preconnect涉及更多的网络操作，它比dns-prefetch消耗更多带宽和系统资源。因此应该谨慎使用，并确保只对确实需要尽快加载的重要资源进行预连接。</li>
+<li>如果只是想加快偶尔使用的第三方服务或者不确定是否会用到的资源，则选择dns-prefetch；若明确即将频繁使用某域名下的资源，则应考虑使用preconnect以获得更好的性能提升</li>
 </ul>
+<h4 id="Http-请求优化"><a href="#Http-请求优化" class="headerlink" title="Http 请求优化"></a>Http 请求优化</h4><ul>
+<li>使用 http2&#x2F;http3 协议，减少队头阻塞</li>
+<li>合并 js、css、图片等文件，合并成一个文件，（通常是同一个页面内的小图标合并成雪碧图，js&#x2F;css 在框架层面已经处理了同一个路由内的代码会单独打包）</li>
+<li>接口合并。前端交互，经常需要请求多个并行或串行接口，此时可以通过接口合并方式，提高接口访问速度</li>
+<li>能使用css的尽量不使用js，能使用js的尽量不用三方插件，避免三方插件大量的库。</li>
+<li>减少cookie传输</li>
+<li>使用CDN提供静态文件</li>
+<li>启用 Gzip&#x2F;Brotli&#x2F;Zstandard 压缩</li>
+<li>分域存放资源</li>
+<li>减少页面重定向</li>
+<li>压缩 html、css、js 等文件</li>
+<li>在 js 之前引用 css（js 执行的时候会进入阻塞，如果放入 js 之后加载，会等待 js 执行完成之后才能加载 css，渲染页面）</li>
+<li>非阻塞 js (defer 和 async)</li>
+<li>矢量图替代位图、使用现代化的图片格式方案（webp&#x2F;avif）</li>
+</ul>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>性能优化的本质是，让用户能更快的看到更流畅的网页，了解网页请求与渲染的流程与原理可以帮助我们更好的进行性能优化<br>我们在做性能优化的时候，要从加载性能、运行性能、体验性能、监控体系多个维度系统性推进，做到可落地、可量化、可复盘。</p>
+<h2 id="加载性能优化（最基础也最能体现工程能力）"><a href="#加载性能优化（最基础也最能体现工程能力）" class="headerlink" title="加载性能优化（最基础也最能体现工程能力）"></a>加载性能优化（最基础也最能体现工程能力）</h2><ol>
+<li><p>网络层面</p>
+<ul>
+<li>启用 HTTP&#x2F;2、HTTP&#x2F;3，减少队头阻塞</li>
+<li>配置合理缓存策略：强缓存 + 协商缓存</li>
+<li>资源压缩：Gzip&#x2F;Brotli、图片 WebP&#x2F;AVIF、字体子集化</li>
+</ul>
+</li>
+<li><p>资源体积与加载</p>
+<ul>
+<li>构建优化：Tree Shaking、代码压缩、去除 console、dead code</li>
+<li>路由懒加载、组件异步加载</li>
+<li>第三方依赖优化：替换轻量库、CDN 引入、动态 import</li>
+</ul>
+</li>
+<li><p>首屏优化</p>
+<ul>
+<li>关键 CSS 内联、非关键 CSS 异步加载</li>
+<li>图片懒加载、占位骨架屏</li>
+<li>预加载、预连接、预 fetch（按场景）</li>
+</ul>
+</li>
+</ol>
+<h2 id="运行时性能优化（高级前端核心）"><a href="#运行时性能优化（高级前端核心）" class="headerlink" title="运行时性能优化（高级前端核心）"></a>运行时性能优化（高级前端核心）</h2><ol>
+<li><p>JS 执行优化</p>
+<ul>
+<li>避免长任务，拆分大块计算</li>
+<li>防抖节流处理高频事件</li>
+<li>避免闭包滥用、内存泄漏（监听、定时器、DOM 引用）</li>
+</ul>
+</li>
+<li><p>渲染优化（重中之重）</p>
+<ul>
+<li>减少重排重绘：集中操作 DOM、使用 transform&#x2F;opacity</li>
+<li>虚拟列表 &#x2F; 无限滚动处理大数据量</li>
+<li>避免强制同步布局（layout thrashing）</li>
+</ul>
+</li>
+<li><p>框架层面（Vue&#x2F;React）</p>
+<ul>
+<li>合理使用 v-memo、computed、watch</li>
+<li>组件拆分、避免不必要渲染</li>
+<li>大数据列表必须用虚拟滚动</li>
+</ul>
+</li>
+</ol>
+<h2 id="体验性能（体现你懂用户）"><a href="#体验性能（体现你懂用户）" class="headerlink" title="体验性能（体现你懂用户）"></a>体验性能（体现你懂用户）</h2><ul>
+<li>骨架屏、加载状态、错误兜底</li>
+<li>交互优先：按钮、输入框等高优交互先响应</li>
+<li>滚动流畅、动画 60fps</li>
+</ul>
+<h2 id="监控与量化（高级工程师必备）"><a href="#监控与量化（高级工程师必备）" class="headerlink" title="监控与量化（高级工程师必备）"></a>监控与量化（高级工程师必备）</h2><ul>
+<li>接入性能指标：FP、FCP、LCP、CLS、TTI、FID</li>
+<li>线上实时监控：错误、卡顿、长任务、内存</li>
+<li>性能看板 + 告警 + 复盘机制</li>
+<li>用数据说话：优化前 vs 优化后</li>
+</ul>
+<p>性能优化不是一次性工作，而是贯穿开发、构建、发布、线上监控的全流程体系。从业务出发，抓最影响用户的瓶颈，用最小成本拿到最大收益。</p>
+<p>面试回答：<br>我做性能优化会从加载、运行、体验、监控四个方向系统性落地：加载上做构建优化、资源压缩、缓存策略、懒加载，提升首屏速度；运行上避免长任务、减少重排重绘、处理内存泄漏，框架层做精准更新和虚拟列表；体验上做骨架屏、交互优先，保证流畅度；最后通过 LCP、CLS 等核心指标做线上监控，形成可量化、可迭代的优化闭环。</p>
+<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><p><a target="_blank" rel="noopener" href="https://bbs.huaweicloud.com/blogs/467207">Vue 性能监控工具（Lighthouse、Web Vitals）</a><br><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1884230">网页加载更快的N种方式</a></p>
 
     </div>
 
@@ -463,7 +556,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%B3%BB%E7%BB%9F%E5%88%86%E6%9E%90"><span class="nav-text">前端性能优化系统分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%A6%82%E6%AD%A4%E9%87%8D%E8%A6%81"><span class="nav-text">为什么性能优化如此重要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8E%E8%BE%93%E5%85%A5-URL-%E5%88%B0%E9%A1%B5%E9%9D%A2%E5%8A%A0%E8%BD%BD%E5%AE%8C%E6%88%90-%E4%B8%AD%E9%97%B4%E5%8F%91%E7%94%9F%E4%BA%86%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-text">从输入 URL 到页面加载完成 中间发生了什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87"><span class="nav-text">性能指标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87%E7%9A%84%E8%AE%A1%E7%AE%97"><span class="nav-text">性能指标的计算</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaScript%E5%BA%93%EF%BC%9Aweb-vitals"><span class="nav-text">JavaScript库：web-vitals</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#performance-api"><span class="nav-text">performance api</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E6%A3%80%E6%B5%8B%E5%B7%A5%E5%85%B7"><span class="nav-text">性能检测工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E6%89%8B%E6%AE%B5"><span class="nav-text">优化手段</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E5%B1%82%E9%9D%A2"><span class="nav-text">网络层面</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98"><span class="nav-text">浏览器缓存</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DNS-%E4%BC%98%E5%8C%96"><span class="nav-text">DNS 优化</span></a></li></ol></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%B3%BB%E7%BB%9F%E5%88%86%E6%9E%90"><span class="nav-text">前端性能优化系统分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%A6%82%E6%AD%A4%E9%87%8D%E8%A6%81"><span class="nav-text">为什么性能优化如此重要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8E%E8%BE%93%E5%85%A5-URL-%E5%88%B0%E9%A1%B5%E9%9D%A2%E5%8A%A0%E8%BD%BD%E5%AE%8C%E6%88%90-%E4%B8%AD%E9%97%B4%E5%8F%91%E7%94%9F%E4%BA%86%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-text">从输入 URL 到页面加载完成 中间发生了什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87"><span class="nav-text">性能指标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87%E7%9A%84%E8%AE%A1%E7%AE%97"><span class="nav-text">性能指标的计算</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaScript%E5%BA%93%EF%BC%9Aweb-vitals"><span class="nav-text">JavaScript库：web-vitals</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#performance-api"><span class="nav-text">performance api</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E6%A3%80%E6%B5%8B%E5%B7%A5%E5%85%B7"><span class="nav-text">性能检测工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E6%89%8B%E6%AE%B5"><span class="nav-text">优化手段</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98"><span class="nav-text">浏览器缓存</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DNS-%E4%BC%98%E5%8C%96"><span class="nav-text">DNS 优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Http-%E8%AF%B7%E6%B1%82%E4%BC%98%E5%8C%96"><span class="nav-text">Http 请求优化</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0%E8%BD%BD%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%88%E6%9C%80%E5%9F%BA%E7%A1%80%E4%B9%9F%E6%9C%80%E8%83%BD%E4%BD%93%E7%8E%B0%E5%B7%A5%E7%A8%8B%E8%83%BD%E5%8A%9B%EF%BC%89"><span class="nav-text">加载性能优化（最基础也最能体现工程能力）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E6%97%B6%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%88%E9%AB%98%E7%BA%A7%E5%89%8D%E7%AB%AF%E6%A0%B8%E5%BF%83%EF%BC%89"><span class="nav-text">运行时性能优化（高级前端核心）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%93%E9%AA%8C%E6%80%A7%E8%83%BD%EF%BC%88%E4%BD%93%E7%8E%B0%E4%BD%A0%E6%87%82%E7%94%A8%E6%88%B7%EF%BC%89"><span class="nav-text">体验性能（体现你懂用户）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%91%E6%8E%A7%E4%B8%8E%E9%87%8F%E5%8C%96%EF%BC%88%E9%AB%98%E7%BA%A7%E5%B7%A5%E7%A8%8B%E5%B8%88%E5%BF%85%E5%A4%87%EF%BC%89"><span class="nav-text">监控与量化（高级工程师必备）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3"><span class="nav-text">参考文档</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
