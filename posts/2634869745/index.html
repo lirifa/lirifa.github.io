@@ -21,18 +21,20 @@
     var CONFIG = {"hostname":"lirifa.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#2bb5d4","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="角落">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Rafa&#39;s Blog">
-<meta property="og:url" content="https://lirifa.github.io/archives/2020/index.html">
+  <meta name="description" content="Webpack 是一个现代 JavaScript 应用程序的静态模块打包器（module bundler）。在前端开发中，Webpack 用于将各种资源（如 JavaScript、CSS、图片等）打包成浏览器可以直接运行的静态资源包。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webpack简介及打包流程">
+<meta property="og:url" content="https://lirifa.github.io/posts/2634869745/index.html">
 <meta property="og:site_name" content="Rafa&#39;s Blog">
-<meta property="og:description" content="角落">
+<meta property="og:description" content="Webpack 是一个现代 JavaScript 应用程序的静态模块打包器（module bundler）。在前端开发中，Webpack 用于将各种资源（如 JavaScript、CSS、图片等）打包成浏览器可以直接运行的静态资源包。">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-06-22T14:28:32.000Z">
+<meta property="article:modified_time" content="2021-06-22T14:28:32.000Z">
 <meta property="article:author" content="Rafa">
-<meta property="article:tag" content="个人博客，技术博客，前端，JavaScript，Vue，git，github，hexo，静态">
+<meta property="article:tag" content="webpack">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://lirifa.github.io/archives/2020/">
+<link rel="canonical" href="https://lirifa.github.io/posts/2634869745/">
 
 
 <script id="page-configurations">
@@ -40,12 +42,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>归档 | Rafa's Blog</title>
+  <title>webpack简介及打包流程 | Rafa's Blog</title>
   
 
 
@@ -203,116 +205,164 @@
         <div class="content-wrap">
           
 
-          <div class="content archive">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <span class="collection-header">嗯..! 目前共计 15 篇日志。 继续努力。</span>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://lirifa.github.io/posts/2634869745/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/44889418?v=4">
+      <meta itemprop="name" content="Rafa">
+      <meta itemprop="description" content="角落">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rafa's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          webpack简介及打包流程
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-06-22 22:28:32" itemprop="dateCreated datePublished" datetime="2021-06-22T22:28:32+08:00">2021-06-22</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2020</span>
-    </div>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-11-20T17:16:59+08:00"
-              content="2020-11-20">
-          11-20
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/posts/2952838103/" itemprop="url">
-            <span itemprop="name">DOM事件流</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-11-18T17:54:17+08:00"
-              content="2020-11-18">
-          11-18
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/posts/51390220/" itemprop="url">
-            <span itemprop="name">WebSocket协议介绍</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-11-17T18:20:40+08:00"
-              content="2020-11-17">
-          11-17
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/posts/2043297485/" itemprop="url">
-            <span itemprop="name">hexo接入valine评论踩坑</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-11-16T00:00:00+08:00"
-              content="2020-11-16">
-          11-16
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/posts/1749470362/" itemprop="url">
-            <span itemprop="name">初识websocket</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
+        <p>Webpack 是一个现代 JavaScript 应用程序的静态模块打包器（module bundler）。在前端开发中，Webpack 用于将各种资源（如 JavaScript、CSS、图片等）打包成浏览器可以直接运行的静态资源包。</p>
+<span id="more"></span>
+<h1 id="构建工具"><a href="#构建工具" class="headerlink" title="构建工具"></a>构建工具</h1><p>早期开发网页，可以说是”刀耕火种“，都是一个个独立的文件，需要手动引入和管理。没有所谓的“模块化”的概念。<br>从2009年 nodejs 的出现，前端开发开始关注模块化和代码组织。<br>然后前端才开始出现工程化的转变，开始使用构建工具来管理项目。</p>
+<h1 id="早起构建工具"><a href="#早起构建工具" class="headerlink" title="早起构建工具"></a>早起构建工具</h1><ul>
+<li>Grunt</li>
+<li>Gulp</li>
+</ul>
+<h2 id="Grunt"><a href="#Grunt" class="headerlink" title="Grunt"></a>Grunt</h2><ul>
+<li>定位： 基于nodejs的任务运行器（task runner），用于自动化重复性任务。</li>
+<li>核心思想：配置优先（configuration over code）</li>
+<li>工作方式：<ul>
+<li>写 Gruntfile.js 配置文件, 用JSON 风格描述任务</li>
+<li>每个任务：读文件 -&gt; 处理文件 -&gt; 写文件（三段式）</li>
+<li>频繁磁盘I&#x2F;O 操作，导致构建速度慢。</li>
+</ul>
+</li>
+<li>特点：<ul>
+<li>配置繁琐，JSON多</li>
+<li>生态成熟、 插件多</li>
+<li>适合老项目、简单任务</li>
+</ul>
+</li>
+</ul>
+<h2 id="Gulp"><a href="#Gulp" class="headerlink" title="Gulp"></a>Gulp</h2><ul>
+<li>定位：基于nodejs 的流式构建工具</li>
+<li>核心思想：代码优先（code over configuration）</li>
+<li>工作方式：<ul>
+<li>写 gulpfile.js, 用JS 函数描述任务</li>
+<li>基于 Node Stream (流) + pipe() 管道</li>
+<li>边读边处理、边处理边输出，只读写一次磁盘</li>
+<li>速度块、内存友好</li>
+</ul>
+</li>
+<li>特点：<ul>
+<li>api 极简、代码清晰</li>
+<li>流式处理，性能好</li>
+<li>现代前端项目常用</li>
+</ul>
+</li>
+</ul>
+<p>Grunt&#x2F;Gulp 是任务工具，只管压缩、合并、编译这种简单流水线，它们不处理模块依赖关系。它们是无模块化时代的产物</p>
+<h1 id="Webpack-出现"><a href="#Webpack-出现" class="headerlink" title="Webpack 出现"></a>Webpack 出现</h1><p>Webpack是干嘛的？<br>定位：模块打包工具（module bundler）, 用于将多个模块打包成一个或多个文件，每个文件包含所有依赖的代码。<br>它解决的是 模块化问题：</p>
+<ul>
+<li>识别 import&#x2F; require</li>
+<li>构建依赖树</li>
+<li>打包、代码分割、懒加载</li>
+<li>处理图片、字体、CSS模块化</li>
+<li>兼容老浏览器</li>
+<li>热更新、开发服务器<br>他是<strong>现代前端工程化的基石</strong>。</li>
+</ul>
+<h1 id="Webpack-打包流程"><a href="#Webpack-打包流程" class="headerlink" title="Webpack 打包流程"></a>Webpack 打包流程</h1><ol>
+<li><p>初始化阶段</p>
+<ol>
+<li>初始化参数(从命令行或者配置文件中获取参数)</li>
+<li>创建compiler对象</li>
+<li>初始化编译环境</li>
+<li>开始编译 compiler.run()</li>
+<li>确定入口文件</li>
+</ol>
+</li>
+<li><p>构建阶段</p>
+<ol>
+<li>编译模块，从入口文件开始 loader 调用js解析器</li>
+<li>完成模块编译，构建依赖关系图</li>
+</ol>
+</li>
+<li><p>封装阶段</p>
+<ol>
+<li>合并 （根据依赖关系生成多个chunk）</li>
+<li>优化 (TreeShaking(树摇), CodeSplitting(代码分割), Minification(压缩), scope hoisting(作用提升) )</li>
+<li>输出资源 (将所有chunk合并到指定目录)</li>
+</ol>
+</li>
+</ol>
 
     </div>
-  </div>
-  
-  
-  
 
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/webpack/" rel="tag"><i class="fa fa-tag"></i> webpack</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/2869941026/" rel="prev" title="web性能优化">
+      <i class="fa fa-chevron-left"></i> web性能优化
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
   
 
 
 
           </div>
           
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC82MDk1Ni8zNzQyNg=="></div>
+  </div>
+  
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -359,6 +409,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7"><span class="nav-text">构建工具</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%97%A9%E8%B5%B7%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7"><span class="nav-text">早起构建工具</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Grunt"><span class="nav-text">Grunt</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Gulp"><span class="nav-text">Gulp</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Webpack-%E5%87%BA%E7%8E%B0"><span class="nav-text">Webpack 出现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Webpack-%E6%89%93%E5%8C%85%E6%B5%81%E7%A8%8B"><span class="nav-text">Webpack 打包流程</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -513,6 +564,21 @@
 
   
 
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
 
 <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"left","width":160,"height":280},"mobile":{"show":false},"react":{"opacityDefault":1,"opacityOnHover":1},"log":false,"tagMode":false});</script></body>
 </html>
