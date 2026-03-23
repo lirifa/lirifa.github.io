@@ -23,7 +23,7 @@
 
   <meta name="description" content="Webpack 是一个现代 JavaScript 应用程序的静态模块打包器（module bundler）。在前端开发中，Webpack 用于将各种资源（如 JavaScript、CSS、图片等）打包成浏览器可以直接运行的静态资源包。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="webpack简介及打包流程">
+<meta property="og:title" content="webpack基本概念">
 <meta property="og:url" content="https://lirifa.github.io/posts/2634869745/index.html">
 <meta property="og:site_name" content="Rafa&#39;s Blog">
 <meta property="og:description" content="Webpack 是一个现代 JavaScript 应用程序的静态模块打包器（module bundler）。在前端开发中，Webpack 用于将各种资源（如 JavaScript、CSS、图片等）打包成浏览器可以直接运行的静态资源包。">
@@ -31,6 +31,8 @@
 <meta property="article:published_time" content="2021-06-22T14:28:32.000Z">
 <meta property="article:modified_time" content="2021-06-22T14:28:32.000Z">
 <meta property="article:author" content="Rafa">
+<meta property="article:tag" content="grunt">
+<meta property="article:tag" content="gulp">
 <meta property="article:tag" content="webpack">
 <meta name="twitter:card" content="summary">
 
@@ -47,7 +49,7 @@
   };
 </script>
 
-  <title>webpack简介及打包流程 | Rafa's Blog</title>
+  <title>webpack基本概念 | Rafa's Blog</title>
   
 
 
@@ -225,7 +227,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          webpack简介及打包流程
+          webpack基本概念
         </h1>
 
         <div class="post-meta">
@@ -290,7 +292,7 @@
 </li>
 </ul>
 <p>Grunt&#x2F;Gulp 是任务工具，只管压缩、合并、编译这种简单流水线，它们不处理模块依赖关系。它们是无模块化时代的产物</p>
-<h1 id="Webpack-出现"><a href="#Webpack-出现" class="headerlink" title="Webpack 出现"></a>Webpack 出现</h1><p>Webpack是干嘛的？<br>定位：模块打包工具（module bundler）, 用于将多个模块打包成一个或多个文件，每个文件包含所有依赖的代码。<br>它解决的是 模块化问题：</p>
+<h1 id="Webpack-出现"><a href="#Webpack-出现" class="headerlink" title="Webpack 出现"></a>Webpack 出现</h1><p>Webpack是干嘛的？<br>定位：模块打包工具（module bundler）, 用于将多个模块打包成一个或多个文件，每个文件包含所有依赖的代码。<br>核心思想：万物皆模块（Everything is a module）<br>它解决的是 模块化问题：</p>
 <ul>
 <li>识别 import&#x2F; require</li>
 <li>构建依赖树</li>
@@ -298,6 +300,68 @@
 <li>处理图片、字体、CSS模块化</li>
 <li>兼容老浏览器</li>
 <li>热更新、开发服务器<br>他是<strong>现代前端工程化的基石</strong>。</li>
+</ul>
+<h2 id="webpack基本构成"><a href="#webpack基本构成" class="headerlink" title="webpack基本构成"></a>webpack基本构成</h2><p>  两个核心包跟一个核心插件：</p>
+<ul>
+<li>webpack：核心包，负责模块打包</li>
+<li>webpack-cli：命令行工具，用于执行webpack</li>
+<li>webpack-dev-server：开发服务器，用于提供热更新、开发环境等功能</li>
+</ul>
+<h2 id="webpack基本配置"><a href="#webpack基本配置" class="headerlink" title="webpack基本配置"></a>webpack基本配置</h2><p>配置文件：webpack.config.js</p>
+<ul>
+<li>mode：打包模式，可选值(production&#x2F;development)，没有设置，默认为production</li>
+<li>entry：入口文件，必填项，可以是字符串、数组、对象等</li>
+<li>output：输出文件，必填项，指定打包后的文件输出目录和文件名等</li>
+<li>plugins：插件</li>
+<li>module：模块配置，用于处理不同类型的模块，如js、css、图片等</li>
+<li>resolve：解析配置，用于解析模块路径，如@、~等</li>
+<li>optimization：优化配置，从 webpack 4 开始，会根据你选择的 mode 来执行不同的优化， 不过所有的优化还是可以手动配置和重写。</li>
+<li>devtool: 此选项控制是否生成，以及如何生成 source map。</li>
+<li>devServer：开发服务器配置，用于提供热更新、开发环境等功能等</li>
+<li>watch：监听文件变化，自动重新编译</li>
+<li>stats：控制输出的详细程度</li>
+<li>…<br><a target="_blank" rel="noopener" href="https://webpack.docschina.org/configuration/">webpack 配置文档</a></li>
+</ul>
+<h2 id="webpack的loader"><a href="#webpack的loader" class="headerlink" title="webpack的loader"></a>webpack的loader</h2><p><a target="_blank" rel="noopener" href="https://webpack.docschina.org/loaders/">loader</a>的本质就是一个 「内容转换函数」，接收源码字符串，输出转换后的新字符串<br>loader 函数 return 出去的内容，必须满足三个条件：</p>
+<ol>
+<li>必须是一个<strong>字符串</strong></li>
+<li>必须是 <strong>可执行的js 代码</strong></li>
+<li>必须是 <strong>模块格式</strong></li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 将markdown转换为html的loader</span></span><br><span class="line"><span class="keyword">const</span> &#123; marked &#125; = <span class="built_in">require</span>(<span class="string">&#x27;marked&#x27;</span>);</span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = <span class="function">(<span class="params">source</span>) =&gt;</span> &#123;  </span><br><span class="line">   <span class="keyword">const</span> html = <span class="title function_">marked</span>(source);</span><br><span class="line">   <span class="keyword">return</span> <span class="string">`export default <span class="subst">$&#123;<span class="built_in">JSON</span>.stringify(html)&#125;</span>`</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>职责：loader 是文件转换器，只针对单个文件内容做转换，不关心整体流程，只关心“进来什么 -&gt; 出去什么”。</li>
+<li>工作时机：loader 在module 构建阶段运行，读取文件 -&gt; 转译 -&gt; 变成webpack能识别的js</li>
+<li>执行顺序：从右往左、从下往上链式执行</li>
+</ul>
+<h2 id="webpack的plugin"><a href="#webpack的plugin" class="headerlink" title="webpack的plugin"></a>webpack的plugin</h2><p><a target="_blank" rel="noopener" href="https://webpack.docschina.org/plugins/">plugin</a>的本质就是一个 <strong>带有apply方法的对象</strong>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 自定义插件</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyPlugin</span> &#123;</span><br><span class="line">    <span class="title function_">apply</span>(<span class="params">compiler</span>) &#123;</span><br><span class="line">        compiler.<span class="property">hooks</span>.<span class="property">done</span>.<span class="title function_">tap</span>(<span class="string">&#x27;MyPlugin&#x27;</span>, <span class="function">(<span class="params">compilation</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;打包完成了！&#x27;</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>它做的事情：</p>
+<ul>
+<li>监听编译开始、结束、模块创建、代码生产、资源输出等<strong>所有阶段</strong></li>
+<li>可以在这些阶段中插入自定义逻辑，实现自定义功能，如：修改配置、修改输出内容、删除文件、压缩代码、生成HTML、拷贝静态资源…。</li>
+<li>本质：扩展webpack能力，干预打包流程</li>
+<li>职责：流程拓展器，针对整个编译过程做事情，可以是打包前、打包中、打包后做任何事</li>
+<li>工作时机：在编译过程中，监听不同的事件，插入自定义逻辑，实现自定义功能</li>
+<li>执行顺序：按webpack钩子触发顺序执行。</li>
+</ul>
+<p>Webpack 基于 ‌Tapable‌ 库提供丰富的生命周期钩子，主要分为两类：‌Compiler 钩子‌ 和 ‌Compilation 钩子‌。<br>常用 Compiler 钩子（全局构建阶段）：</p>
+<ul>
+<li>compile：在新的编译开始前触发</li>
+<li>emit: 最常用‌之一，在资源输出到输出目录（如 dist）‌之前‌触发</li>
+<li>afterEmit‌: 在资源‌已输出到磁盘后‌触发，适合执行清理、通知等后续操作</li>
+<li>done：最常用‌之一，在整个构建完成时触发，可用于统计、日志打印等</li>
+<li>run：在编译开始前触发（仅在 webpack –watch 模式下有效）</li>
+<li>failed：在编译失败时触发</li>
+</ul>
+<p>常用 Compilation 钩子（单次构建阶段）:</p>
+<ul>
+<li>‌buildModule‌：模块开始构建前。</li>
+<li>‌succeedModule‌：模块构建成功后。</li>
+<li>‌optimizeDependencies‌：依赖优化阶段开始前。</li>
+<li>optimize‌：整体优化步骤开始前。</li>
+<li>‌emitAssets‌：准备输出资源到输出目录前（与 emit 接近，但更早）‌</li>
+<li>seal‌：编译密封（不可再修改）前触发。</li>
 </ul>
 <h1 id="Webpack-打包流程"><a href="#Webpack-打包流程" class="headerlink" title="Webpack 打包流程"></a>Webpack 打包流程</h1><ol>
 <li><p>初始化阶段</p>
@@ -334,6 +398,8 @@
           
           <div class="post-tags">
               <a href="/tags/webpack/" rel="tag"><i class="fa fa-tag"></i> webpack</a>
+              <a href="/tags/grunt/" rel="tag"><i class="fa fa-tag"></i> grunt</a>
+              <a href="/tags/gulp/" rel="tag"><i class="fa fa-tag"></i> gulp</a>
           </div>
 
         
@@ -409,7 +475,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7"><span class="nav-text">构建工具</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%97%A9%E8%B5%B7%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7"><span class="nav-text">早起构建工具</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Grunt"><span class="nav-text">Grunt</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Gulp"><span class="nav-text">Gulp</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Webpack-%E5%87%BA%E7%8E%B0"><span class="nav-text">Webpack 出现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Webpack-%E6%89%93%E5%8C%85%E6%B5%81%E7%A8%8B"><span class="nav-text">Webpack 打包流程</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7"><span class="nav-text">构建工具</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%97%A9%E8%B5%B7%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7"><span class="nav-text">早起构建工具</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Grunt"><span class="nav-text">Grunt</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Gulp"><span class="nav-text">Gulp</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Webpack-%E5%87%BA%E7%8E%B0"><span class="nav-text">Webpack 出现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#webpack%E5%9F%BA%E6%9C%AC%E6%9E%84%E6%88%90"><span class="nav-text">webpack基本构成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#webpack%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE"><span class="nav-text">webpack基本配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#webpack%E7%9A%84loader"><span class="nav-text">webpack的loader</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#webpack%E7%9A%84plugin"><span class="nav-text">webpack的plugin</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Webpack-%E6%89%93%E5%8C%85%E6%B5%81%E7%A8%8B"><span class="nav-text">Webpack 打包流程</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -438,7 +504,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
