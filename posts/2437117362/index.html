@@ -347,7 +347,11 @@
 </ul>
 <h2 id="2-验证-Referer-Origin"><a href="#2-验证-Referer-Origin" class="headerlink" title="2. 验证 Referer &#x2F; Origin"></a>2. 验证 Referer &#x2F; Origin</h2><ul>
 <li>Referer：标明请求来自哪个页面</li>
-<li>Origin：标明请求来自哪个源（协议 + 域名 + 端口）<br>后端判断：必须来自本网站域名，否则拒绝<br>缺点： </li>
+<li>Origin：标明请求来自哪个源（协议 + 域名 + 端口）</li>
+</ul>
+<p>后端判断：必须来自本网站域名，否则拒绝</p>
+<p>缺点： </p>
+<ul>
 <li>Referer 可被伪造（弱防御）</li>
 <li>部分场景会被隐藏</li>
 <li>只能作为辅助手段</li>
