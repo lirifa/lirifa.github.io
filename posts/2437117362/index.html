@@ -332,8 +332,8 @@
 </tr>
 </tbody></table>
 <p>一句话区分：<br>XSS &#x3D; 脚本在你页面里跑<br>CSRF &#x3D; 借你的身份发请求</p>
-<h1 id="防御方案"><a href="#防御方案" class="headerlink" title="防御方案"></a>防御方案</h1><ol>
-<li>使用 CSRF Token（最通用、最推荐）<br>流程：</li>
+<h1 id="防御方案"><a href="#防御方案" class="headerlink" title="防御方案"></a>防御方案</h1><h2 id="1-使用-CSRF-Token（最通用、最推荐）"><a href="#1-使用-CSRF-Token（最通用、最推荐）" class="headerlink" title="1. 使用 CSRF Token（最通用、最推荐）"></a>1. 使用 CSRF Token（最通用、最推荐）</h2><p>流程：</p>
+<ol>
 <li>服务器在页面渲染时生成随机 Token，存入 Session</li>
 <li>表单 &#x2F; 请求里带上该 Token</li>
 <li>后端校验 Token 是否一致</li>
@@ -345,34 +345,24 @@
 <li>无法构造有效请求</li>
 <li>前后端分离、传统 Web 都适用</li>
 </ul>
-<ol start="2">
-<li>验证 Referer &#x2F; Origin</li>
-</ol>
-<ul>
+<h2 id="2-验证-Referer-Origin"><a href="#2-验证-Referer-Origin" class="headerlink" title="2. 验证 Referer &#x2F; Origin"></a>2. 验证 Referer &#x2F; Origin</h2><ul>
 <li>Referer：标明请求来自哪个页面</li>
 <li>Origin：标明请求来自哪个源（协议 + 域名 + 端口）<br>后端判断：必须来自本网站域名，否则拒绝<br>缺点： </li>
 <li>Referer 可被伪造（弱防御）</li>
 <li>部分场景会被隐藏</li>
 <li>只能作为辅助手段</li>
 </ul>
-<ol start="3">
-<li>SameSite Cookie（现代浏览器强力防御）<br>给 Cookie 设置 SameSite 属性：<code>Set-Cookie: sessionid=xxx; SameSite=Lax;</code><br>三种模式：</li>
-</ol>
+<h2 id="3-SameSite-Cookie（现代浏览器强力防御）"><a href="#3-SameSite-Cookie（现代浏览器强力防御）" class="headerlink" title="3. SameSite Cookie（现代浏览器强力防御）"></a>3. SameSite Cookie（现代浏览器强力防御）</h2><p>给 Cookie 设置 SameSite 属性：<code>Set-Cookie: sessionid=xxx; SameSite=Lax;</code><br>三种模式：</p>
 <ul>
 <li>Strict：完全禁止跨站带 Cookie</li>
 <li>Lax：仅安全跳转（a 链接）可带，POST &#x2F; 异步请求不带</li>
 <li>None：不限制（需配合 Secure）<br>现代浏览器默认 Lax，大幅降低 CSRF 风险。</li>
 </ul>
-<ol start="4">
-<li>敏感操作二次验证</li>
-</ol>
-<ul>
+<h2 id="4-敏感操作二次验证"><a href="#4-敏感操作二次验证" class="headerlink" title="4. 敏感操作二次验证"></a>4. 敏感操作二次验证</h2><ul>
 <li>转账、改密要求输入密码 &#x2F; 验证码</li>
 <li>即使被 CSRF，也无法完成攻击</li>
 </ul>
-<ol start="5">
-<li>自定义请求头 + 后端校验<br>比如要求请求必须带：<code>X-Requested-With: XMLHttpRequest</code><br>跨站无法随意添加自定义头（简单请求限制），后端可校验。</li>
-</ol>
+<h2 id="5-自定义请求头-后端校验"><a href="#5-自定义请求头-后端校验" class="headerlink" title="5. 自定义请求头 + 后端校验"></a>5. 自定义请求头 + 后端校验</h2><p>比如要求请求必须带：<code>X-Requested-With: XMLHttpRequest</code><br>跨站无法随意添加自定义头（简单请求限制），后端可校验。</p>
 <h1 id="最佳实践"><a href="#最佳实践" class="headerlink" title="最佳实践"></a>最佳实践</h1><ol>
 <li>Cookie 设置 SameSite&#x3D;Lax + Secure</li>
 <li>关键接口强制 CSRF Token</li>
@@ -484,7 +474,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-CSRF"><span class="nav-text">什么是 CSRF</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%94%BB%E5%87%BB%E5%8E%9F%E7%90%86%E4%B8%8E%E6%B5%81%E7%A8%8B"><span class="nav-text">攻击原理与流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%83%BD%E6%88%90%E5%8A%9F%EF%BC%9F%E5%85%B3%E9%94%AE%E5%8E%9F%E5%9B%A0"><span class="nav-text">为什么能成功？关键原因</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E6%94%BB%E5%87%BB%E8%BD%BD%E4%BD%93"><span class="nav-text">常见攻击载体</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%B1%E5%AE%B3"><span class="nav-text">危害</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CSRF-%E4%B8%8E-XSS-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-text">CSRF 与 XSS 的区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%98%B2%E5%BE%A1%E6%96%B9%E6%A1%88"><span class="nav-text">防御方案</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="nav-text">最佳实践</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E8%AF%B7%E6%B1%82"><span class="nav-text">简单请求</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-CSRF"><span class="nav-text">什么是 CSRF</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%94%BB%E5%87%BB%E5%8E%9F%E7%90%86%E4%B8%8E%E6%B5%81%E7%A8%8B"><span class="nav-text">攻击原理与流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%83%BD%E6%88%90%E5%8A%9F%EF%BC%9F%E5%85%B3%E9%94%AE%E5%8E%9F%E5%9B%A0"><span class="nav-text">为什么能成功？关键原因</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E6%94%BB%E5%87%BB%E8%BD%BD%E4%BD%93"><span class="nav-text">常见攻击载体</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%B1%E5%AE%B3"><span class="nav-text">危害</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CSRF-%E4%B8%8E-XSS-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-text">CSRF 与 XSS 的区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%98%B2%E5%BE%A1%E6%96%B9%E6%A1%88"><span class="nav-text">防御方案</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E4%BD%BF%E7%94%A8-CSRF-Token%EF%BC%88%E6%9C%80%E9%80%9A%E7%94%A8%E3%80%81%E6%9C%80%E6%8E%A8%E8%8D%90%EF%BC%89"><span class="nav-text">1. 使用 CSRF Token（最通用、最推荐）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E9%AA%8C%E8%AF%81-Referer-Origin"><span class="nav-text">2. 验证 Referer &#x2F; Origin</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-SameSite-Cookie%EF%BC%88%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E5%BC%BA%E5%8A%9B%E9%98%B2%E5%BE%A1%EF%BC%89"><span class="nav-text">3. SameSite Cookie（现代浏览器强力防御）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E6%95%8F%E6%84%9F%E6%93%8D%E4%BD%9C%E4%BA%8C%E6%AC%A1%E9%AA%8C%E8%AF%81"><span class="nav-text">4. 敏感操作二次验证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AF%B7%E6%B1%82%E5%A4%B4-%E5%90%8E%E7%AB%AF%E6%A0%A1%E9%AA%8C"><span class="nav-text">5. 自定义请求头 + 后端校验</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="nav-text">最佳实践</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E8%AF%B7%E6%B1%82"><span class="nav-text">简单请求</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
